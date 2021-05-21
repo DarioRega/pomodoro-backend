@@ -1,0 +1,38 @@
+variables:
+  IMAGE_NAME: tests
+  ENV_TAG: v1
+  DOCKER_FILE: ./docker/gitlab_ci/Dockerfile
+  DB_HOST: mysql
+  DB_USERNAME: test
+  MYSQL_DATABASE: test
+  MYSQL_USER: test
+  MYSQL_PASSWORD: secret
+  MYSQL_ROOT_PASSWORD: secret
+  MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
+stages:
+  - build
+  - test
+  - deploy
+
+build_test_image:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  script: ./scripts/build-image.sh
+  only:
+    changes:
+      - docker/gitlab_ci
+
+unit_test:
+  image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
+  services:
+    - mysql:8
+  stage: test
+  script:
+    - cp .env.test .env
+    - composer install
+    - php artisan key:generate
+    - php artisan migrate
+    - php artisan test
