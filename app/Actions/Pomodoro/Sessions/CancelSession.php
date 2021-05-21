@@ -4,8 +4,7 @@ namespace App\Actions\Pomodoro\Sessions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 
-
-class FinishSession
+class CancelSession
 {
     use AsAction;
 
