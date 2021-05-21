@@ -34,5 +34,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/websocket-test', function
 })->name('websocket.test');
 
 Route::get('/broadcast', function () {
-   broadcast(new Test());
+    broadcast(new Test());
 });
