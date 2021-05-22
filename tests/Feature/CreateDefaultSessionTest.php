@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Actions\Pomodoro\Sessions\CreateDefaultSession;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -12,24 +13,65 @@ class CreateDefaultSessionTest extends TestCase
     use RefreshDatabase;
 
     const DEFAULT_SESSION_VALUES = [
+        'session_name' => 'Test Default Session',
         'pomodoro_duration' => '00:00:25',
         'small_pause_duration' => '00:00:05',
         'big_pause_duration' => '00:00:15',
         'pomodoro_quantity' => 4,
     ];
 
-    public function test_pomodoro_default_session_creation()
+    public function test_pomodoro_default_session_creation_endpoint()
     {
         Sanctum::actingAs($user = User::factory()->create());
 
         $response = $this->postJson('/api/user/sessions', [
-            'session_name' => 'Test Default Session',
+            'session_name' => self::DEFAULT_SESSION_VALUES['session_name'],
         ]);
 
         $response->assertStatus(201);
 
+        $this->assertDefaultSessionValues($user);
+    }
+
+    public function test_pomodoro_default_session_creation_validation_name()
+    {
+        Sanctum::actingAs($user = User::factory()->create());
+
+        $response = $this->postJson('/api/user/sessions', [
+            'session_name' => '',
+        ]);
+
+        $response->assertStatus(422)->assertJson([
+            'errors' => [
+                'session_name' => [
+                    'The session name field is required.'
+                ]
+            ],
+        ]);
+
+        $response = $this->postJson('/api/user/sessions', [
+            'session_name' => 'aaa',
+        ]);
+
+        $response->assertStatus(422)->assertJson([
+            'errors' => [
+                'session_name' => [
+                    'The session name must be at least 4 characters.'
+                ]
+            ],
+        ]);
+    }
+
+    public function test_pomodoro_default_session_creation_action()
+    {
+        $this->actingAs($user =User::factory()->create());
+        CreateDefaultSession::run(self::DEFAULT_SESSION_VALUES['session_name']);
+        $this->assertDefaultSessionValues($user);
+    }
+
+    private function assertDefaultSessionValues(User $user) {
         $this->assertEquals(
-            'Test Default Session',
+            self::DEFAULT_SESSION_VALUES['session_name'],
             $user->fresh()->pomodoroSessions->first()->name
         );
 
