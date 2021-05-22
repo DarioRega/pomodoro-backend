@@ -9,6 +9,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PomodoroSession extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'pomodoro_duration',
+        'small_pause_duration',
+        'big_pause_duration',
+        'pomodoro_quantity',
+    ];
+
+    /**
      * Get this sessions steps.
      */
     public function steps(): HasMany
