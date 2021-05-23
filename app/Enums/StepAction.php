@@ -7,7 +7,7 @@ use BenSampo\Enum\Enum;
 /**
  * @method static static Start()
  * @method static static Pause()
- * @method static static Continue()
+ * @method static static Resume()
  * @method static static Skip()
  * @method static static Finish()
  */
