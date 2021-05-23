@@ -10,7 +10,7 @@ class CreatePomodoroSessionsTable extends Migration
     {
         Schema::create('pomodoro_sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('goals')->nullable();
             $table->time('pomodoro_duration');
             $table->time('small_pause_duration');
             $table->time('big_pause_duration');

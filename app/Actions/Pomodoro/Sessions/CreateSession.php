@@ -20,7 +20,7 @@ class CreateSession
     public function rules(): array
     {
         return [
-            'session_name' => ['required', 'min:4'],
+            'goals' => ['nullable'],
             'settings_id' => ['nullable'],
         ];
     }
@@ -28,8 +28,12 @@ class CreateSession
     public function asController(ActionRequest $request)
     {
         $data = $request->validated();
-        if (!isset($data['settings_id'])) {
-            return CreateDefaultSession::run($data['session_name']);
+        if (isset($data['settings_id'])) {
+            // TODO implement create custom session
         }
+        if (isset($data['goals'])) {
+            return CreateDefaultSession::run($data['goals']);
+        }
+        return CreateDefaultSession::run();
     }
 }

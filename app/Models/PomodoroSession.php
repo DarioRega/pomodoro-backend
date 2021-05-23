@@ -14,7 +14,7 @@ class PomodoroSession extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'goals',
         'pomodoro_duration',
         'small_pause_duration',
         'big_pause_duration',
