@@ -18,7 +18,7 @@ class CreateStepTest extends TestCase
         $user = User::factory()->create();
         $session = PomodoroSession::factory()->for($user)->create();
 
-        $step = CreateStep::run(StepType::Pomodoro(), $session);
+        $step = CreateStep::run(StepType::POMODORO(), $session);
 
         $this->assertEquals(
             $session->id,
@@ -36,7 +36,7 @@ class CreateStepTest extends TestCase
         );
 
         $this->assertEquals(
-            StepType::Pomodoro(),
+            StepType::POMODORO(),
             $step->fresh()->type
         );
 

@@ -5,17 +5,17 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static Pending()
- * @method static static InProgress()
- * @method static static Paused()
- * @method static static Done()
- * @method static static Skipped()
+ * @method static static PENDING()
+ * @method static static IN_PROGRESS()
+ * @method static static PAUSED()
+ * @method static static DONE()
+ * @method static static SKIPPED()
  */
 final class StepStatus extends Enum
 {
-    const Pending = 'PENDING';
-    const InProgress = 'IN_PROGRESS';
-    const Paused = 'PAUSED';
-    const Done = 'DONE';
-    const Skipped = 'SKIPPED';
+    const PENDING = 'PENDING';
+    const IN_PROGRESS = 'IN_PROGRESS';
+    const PAUSED = 'PAUSED';
+    const DONE = 'DONE';
+    const SKIPPED = 'SKIPPED';
 }

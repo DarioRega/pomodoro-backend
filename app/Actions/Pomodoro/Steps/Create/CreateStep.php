@@ -5,6 +5,7 @@ namespace App\Actions\Pomodoro\Steps\Create;
 use App\Enums\StepType;
 use App\Models\PomodoroSession;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CreateStep
@@ -14,9 +15,9 @@ class CreateStep
     /**
      * @throws Exception
      */
-    public function handle(StepType $stepType, PomodoroSession $session)
+    public function handle(StepType $stepType, PomodoroSession $session): Model
     {
-        if (StepType::Pomodoro()->is($stepType)) {
+        if (StepType::POMODORO()->is($stepType)) {
             return CreatePomodoroStep::run($session);
         }
 
