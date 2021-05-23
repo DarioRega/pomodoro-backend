@@ -19,29 +19,30 @@ class CreateStepTest extends TestCase
         $session = PomodoroSession::factory()->for($user)->create();
 
         $step = CreateStep::run(StepType::POMODORO(), $session);
+        $step = $step->fresh();
 
         $this->assertEquals(
             $session->id,
-            $step->fresh()->pomodoro_session_id
+            $step->pomodoro_session_id
         );
 
         $this->assertEquals(
             $session->pomodoro_duration,
-            $step->fresh()->duration
+            $step->duration
         );
 
         $this->assertEquals(
             $session->pomodoro_duration,
-            $step->fresh()->resting_time
+            $step->resting_time
         );
 
         $this->assertEquals(
             StepType::POMODORO(),
-            $step->fresh()->type
+            $step->type
         );
 
-        $this->assertNull($step->fresh()->started_at);
-        $this->assertNull($step->fresh()->skipped_at);
-        $this->assertNull($step->fresh()->finished_at);
+        $this->assertNull($step->started_at);
+        $this->assertNull($step->skipped_at);
+        $this->assertNull($step->finished_at);
     }
 }
