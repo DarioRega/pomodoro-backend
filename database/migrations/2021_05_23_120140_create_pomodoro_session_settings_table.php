@@ -17,7 +17,7 @@ class CreatePomodoroSessionSettingsTable extends Migration
             $table->integer('pomodoro_quantity');
             $table->timestamps();
 
-            $table->foreignId('user_id');
+            $table->foreignId('user_setting_id');
         });
     }
 

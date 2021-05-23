@@ -9,7 +9,7 @@ use BenSampo\Enum\Enum;
  * @method static static InProgress()
  * @method static static Paused()
  * @method static static Done()
- * @method static static Ended()
+ * @method static static Aborted()
  */
 final class SessionStatus extends Enum
 {
@@ -17,5 +17,5 @@ final class SessionStatus extends Enum
     const InProgress = 'IN_PROGRESS';
     const Paused = 'PAUSED';
     const Done = 'DONE';
-    const Ended = 'ENDED';
+    const Aborted = 'ABORTED';
 }

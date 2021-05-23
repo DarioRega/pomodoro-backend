@@ -10,8 +10,8 @@ class PomodoroSessionSetting extends Model
     /**
      * Get this setting owner user
      */
-    public function user(): BelongsTo
+    public function userSettings(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserSettings::class);
     }
 }

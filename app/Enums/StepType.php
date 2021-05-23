@@ -6,12 +6,12 @@ use BenSampo\Enum\Enum;
 
 /**
  * @method static static Pomodoro()
- * @method static static SmallPause()
- * @method static static BigPause()
+ * @method static static SmallBreak()
+ * @method static static BigBreak()
  */
 final class StepType extends Enum
 {
     const Pomodoro = 'POMODORO';
-    const SmallPause = 'SMALL_PAUSE';
-    const BigPause = 'BIG_PAUSE';
+    const SmallBreak = 'SMALL_BREAK';
+    const BigBreak = 'BIG_BREAK';
 }
