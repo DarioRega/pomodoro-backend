@@ -9,7 +9,7 @@ class AddUserSettingIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('user_setting_id');
+            $table->foreignId('user_setting_id')->nullable();
         });
     }
 
