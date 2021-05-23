@@ -12,8 +12,8 @@ class CreatePomodoroSessionsTable extends Migration
             $table->id();
             $table->text('goals')->nullable();
             $table->time('pomodoro_duration');
-            $table->time('small_pause_duration');
-            $table->time('big_pause_duration');
+            $table->time('small_break_duration');
+            $table->time('big_break_duration');
             $table->integer('pomodoro_quantity');
             $table->timestamps();
 
