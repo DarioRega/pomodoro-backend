@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -67,11 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(PomodoroSession::class);
     }
 
-    /**
-     * Get the sessions settings for this user.
-     */
-    public function pomodoroSessionSettings(): HasMany
+   /**
+   * Get the global settings for this user.
+   */
+    public function settings(): HasOne
     {
-        return $this->hasMany(PomodoroSession::class);
+        return $this->hasOne(UserSettings::class);
     }
 }
