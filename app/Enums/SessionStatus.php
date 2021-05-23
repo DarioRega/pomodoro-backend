@@ -17,5 +17,5 @@ final class SessionStatus extends Enum
     const InProgress = 'IN_PROGRESS';
     const Paused = 'PAUSED';
     const Done = 'DONE';
-    const Ended = 'ENDED';
+    const Aborted = 'ABORTED';
 }
