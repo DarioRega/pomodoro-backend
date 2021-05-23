@@ -15,8 +15,8 @@ class CreateDefaultSessionTest extends TestCase
     const DEFAULT_SESSION_VALUES = [
         'goals' => 'Make my tasks like flash',
         'pomodoro_duration' => '00:00:25',
-        'small_pause_duration' => '00:00:05',
-        'big_pause_duration' => '00:00:15',
+        'small_break_duration' => '00:00:05',
+        'big_break_duration' => '00:00:15',
         'pomodoro_quantity' => 4,
     ];
 
@@ -62,13 +62,13 @@ class CreateDefaultSessionTest extends TestCase
         );
 
         $this->assertEquals(
-            self::DEFAULT_SESSION_VALUES['small_pause_duration'],
-            $user->fresh()->pomodoroSessions->first()->small_pause_duration
+            self::DEFAULT_SESSION_VALUES['small_break_duration'],
+            $user->fresh()->pomodoroSessions->first()->small_break_duration
         );
 
         $this->assertEquals(
-            self::DEFAULT_SESSION_VALUES['big_pause_duration'],
-            $user->fresh()->pomodoroSessions->first()->big_pause_duration
+            self::DEFAULT_SESSION_VALUES['big_break_duration'],
+            $user->fresh()->pomodoroSessions->first()->big_break_duration
         );
 
         $this->assertEquals(

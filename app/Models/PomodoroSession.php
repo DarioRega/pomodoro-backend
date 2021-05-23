@@ -16,8 +16,8 @@ class PomodoroSession extends Model
     protected $fillable = [
         'goals',
         'pomodoro_duration',
-        'small_pause_duration',
-        'big_pause_duration',
+        'small_break_duration',
+        'big_break_duration',
         'pomodoro_quantity',
     ];
 

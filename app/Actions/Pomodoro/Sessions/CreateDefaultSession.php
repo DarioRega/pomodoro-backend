@@ -14,8 +14,8 @@ class CreateDefaultSession
     {
         $data = [
             'pomodoro_duration' => '00:00:25',
-            'small_pause_duration' => '00:00:05',
-            'big_pause_duration' => '00:00:15',
+            'small_break_duration' => '00:00:05',
+            'big_break_duration' => '00:00:15',
             'pomodoro_quantity' => 4
         ];
 
