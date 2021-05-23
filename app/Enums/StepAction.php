@@ -15,7 +15,7 @@ final class StepAction extends Enum
 {
     const Start = 'START';
     const Pause = 'PAUSE';
-    const Continue = 'CONTINUE';
+    const Resume = 'RESUME';
     const Skip = 'SKIP';
     const Finish = 'FINISH';
 }
