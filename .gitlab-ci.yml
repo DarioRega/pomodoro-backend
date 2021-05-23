@@ -22,6 +22,8 @@ build_test_image:
     - docker:dind
   script: ./scripts/build-image.sh
   only:
+    refs:
+      - master
     changes:
       - docker/gitlab_ci
 
