@@ -25,6 +25,10 @@ class CreateStep
             return CreateSmallBreakStep::run($session);
         }
 
+        if (StepType::BIG_BREAK()->is($stepType)) {
+            return CreateBigBreakStep::run($session);
+        }
+
         throw new Exception("Invalid step type: $stepType");
     }
 }
