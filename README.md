@@ -1,9 +1,9 @@
 <a href="https://gitlab.com/seelo/pomodoro/backend/-/commits/master">
-  <img alt="pipeline status" height="150" width="150"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/pipeline.svg" />
+  <img alt="pipeline status" height="30" width="160"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/pipeline.svg" />
 </a>
 
-<a href="https://gitlab.com/seelo/pomodoro/backend/-/commits/master">
-  <img alt="coverage report" height="150" width="150"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/coverage.svg" />
+<a href="https://coverage.pomodoro.seelo.ch/">
+  <img alt="coverage report" height="30" width="160"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/coverage.svg" />
 </a>
 
 ## Project setup
