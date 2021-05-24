@@ -22,7 +22,7 @@ build_test_image:
     changes:
       - docker/gitlab_ci/Dockerfile
 
-test:features:
+tests:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
   stage: test
   script:
@@ -33,6 +33,8 @@ test:features:
   artifacts:
     reports:
       cobertura: reports/cobertura.xml
+      junit:
+        - reports/junit.xml
 
 pages:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
