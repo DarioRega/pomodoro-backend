@@ -21,6 +21,10 @@ class CreateStep
             return CreatePomodoroStep::run($session);
         }
 
+        if (StepType::SMALL_BREAK()->is($stepType)) {
+            return CreateSmallBreakStep::run($session);
+        }
+
         throw new Exception("Invalid step type: $stepType");
     }
 }

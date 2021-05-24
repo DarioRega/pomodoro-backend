@@ -45,4 +45,37 @@ class CreateStepTest extends TestCase
         $this->assertNull($step->skipped_at);
         $this->assertNull($step->finished_at);
     }
+
+    public function testCreateSmallBreakTestStep()
+    {
+        $user = User::factory()->create();
+        $session = PomodoroSession::factory()->for($user)->create();
+
+        $step = CreateStep::run(StepType::SMALL_BREAK(), $session);
+        $step = $step->fresh();
+
+        $this->assertEquals(
+            $session->id,
+            $step->pomodoro_session_id
+        );
+
+        $this->assertEquals(
+            $session->small_break_duration,
+            $step->duration
+        );
+
+        $this->assertEquals(
+            $session->small_break_duration,
+            $step->resting_time
+        );
+
+        $this->assertEquals(
+            StepType::SMALL_BREAK(),
+            $step->type
+        );
+
+        $this->assertNull($step->started_at);
+        $this->assertNull($step->skipped_at);
+        $this->assertNull($step->finished_at);
+    }
 }
