@@ -10,19 +10,19 @@ class CreateDefaultSession
 {
     use AsAction;
 
-    public function handle(string $goals = null): Model
+    public function handle(array $data = []): Model
     {
-        $data = [
-            'pomodoro_duration' => '00:00:25',
-            'small_break_duration' => '00:00:05',
-            'big_break_duration' => '00:00:15',
+        $sessionData = [
+            'pomodoro_duration' => '00:25:00',
+            'small_break_duration' => '00:05:00',
+            'big_break_duration' => '00:15:00',
             'pomodoro_quantity' => 4
         ];
 
-        if ($goals !== null) {
-            $data['goals'] = $goals;
+        if (isset($data['goals'])) {
+            $sessionData['goals'] = $data['goals'];
         }
 
-        return Auth::user()->pomodoroSessions()->create($data);
+        return Auth::user()->pomodoroSessions()->create($sessionData);
     }
 }

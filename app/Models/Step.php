@@ -43,6 +43,12 @@ use Illuminate\Support\Carbon;
  */
 class Step extends Model
 {
+    protected $fillable = [
+        'type',
+        'duration',
+        'resting_time',
+    ];
+
     /**
      * Get the sessions for this user.
      */

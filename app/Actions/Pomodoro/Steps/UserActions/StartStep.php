@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions\Pomodoro\Steps;
+namespace App\Actions\Pomodoro\Steps\UserActions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PauseStep
+class StartStep
 {
     use AsAction;
 

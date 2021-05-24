@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -38,9 +39,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PomodoroSession whereUpdatedAt($value)
  * @method static Builder|PomodoroSession whereUserId($value)
  * @mixin Eloquent
+ * @method static \Database\Factories\PomodoroSessionFactory factory(...$parameters)
  */
 class PomodoroSession extends Model
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *

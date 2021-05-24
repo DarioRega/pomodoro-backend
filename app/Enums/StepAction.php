@@ -5,17 +5,17 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static Start()
- * @method static static Pause()
- * @method static static Resume()
- * @method static static Skip()
- * @method static static Finish()
+ * @method static static START()
+ * @method static static PAUSE()
+ * @method static static RESUME()
+ * @method static static SKIP()
+ * @method static static FINISH()
  */
 final class StepAction extends Enum
 {
-    const Start = 'START';
-    const Pause = 'PAUSE';
-    const Resume = 'RESUME';
-    const Skip = 'SKIP';
-    const Finish = 'FINISH';
+    const START = 'START';
+    const PAUSE = 'PAUSE';
+    const RESUME = 'RESUME';
+    const SKIP = 'SKIP';
+    const FINISH = 'FINISH';
 }
