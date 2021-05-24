@@ -1,5 +1,11 @@
-[![pipeline status](https://gitlab.com/seelo/pomodoro/backend/badges/master/pipeline.svg)](https://gitlab.com/seelo/pomodoro/backend/-/commits/master) 
-[![coverage report](https://gitlab.com/seelo/pomodoro/backend/badges/master/coverage.svg)](https://gitlab.com/seelo/pomodoro/backend/-/commits/master)
+<a href="https://gitlab.com/seelo/pomodoro/backend/-/commits/master">
+  <img alt="pipeline status" height="150" width="150"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/pipeline.svg" />
+</a>
+
+<a href="https://gitlab.com/seelo/pomodoro/backend/-/commits/master">
+  <img alt="coverage report" height="150" width="150"  src="https://gitlab.com/seelo/pomodoro/backend/badges/master/coverage.svg" />
+</a>
+
 ## Project setup
 
 ### Install
