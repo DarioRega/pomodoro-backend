@@ -16,6 +16,17 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">./app/Actions/Fortify</directory>
+            <directory suffix=".php">./app/Actions/Jetstream</directory>
+            <directory suffix=".php">./app/Http/Middleware</directory>
+            <file>app/Providers/FortifyServiceProvider.php</file>
+            <file>app/Console/Kernel.php</file>
+        </exclude>
+        <report>
+<!--        <html outputDirectory="reports/coverage"/>-->
+            <cobertura outputFile="reports/cobertura.xml"/>
+        </report>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
