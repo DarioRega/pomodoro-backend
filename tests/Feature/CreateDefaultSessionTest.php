@@ -15,9 +15,9 @@ class CreateDefaultSessionTest extends TestCase
 
     const DEFAULT_SESSION_VALUES = [
         'goals' => 'Make my tasks like flash',
-        'pomodoro_duration' => '00:00:25',
-        'small_break_duration' => '00:00:05',
-        'big_break_duration' => '00:00:15',
+        'pomodoro_duration' => '00:25:00',
+        'small_break_duration' => '00:05:00',
+        'big_break_duration' => '00:15:00',
         'pomodoro_quantity' => 4,
     ];
 
@@ -29,9 +29,10 @@ class CreateDefaultSessionTest extends TestCase
             'goals' => self::DEFAULT_SESSION_VALUES['goals'],
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
         $session = $user->fresh()->pomodoroSessions->first();
         $this->assertDefaultSessionValues($session);
+        $this->assertCount(8, $session->steps);
     }
 
     public function testCreateDefaultSessionWithGoals()

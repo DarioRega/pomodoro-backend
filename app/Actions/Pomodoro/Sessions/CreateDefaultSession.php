@@ -13,9 +13,9 @@ class CreateDefaultSession
     public function handle(array $data = []): Model
     {
         $sessionData = [
-            'pomodoro_duration' => '00:00:25',
-            'small_break_duration' => '00:00:05',
-            'big_break_duration' => '00:00:15',
+            'pomodoro_duration' => '00:25:00',
+            'small_break_duration' => '00:05:00',
+            'big_break_duration' => '00:15:00',
             'pomodoro_quantity' => 4
         ];
 

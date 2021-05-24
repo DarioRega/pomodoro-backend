@@ -2,8 +2,7 @@
 
 namespace App\Actions\Pomodoro\Sessions;
 
-use App\Models\PomodoroSessionSetting;
-use App\Models\User;
+use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -18,7 +17,10 @@ class CreateSession
             // TODO implement create custom session
         }
 
-        return CreateDefaultSession::run($data);
+        $session = CreateDefaultSession::run($data);
+        CreateSessionSteps::run($session);
+
+        return $session->with('steps')->latest()->first();
     }
 
     public function rules(): array
