@@ -12,9 +12,15 @@ class CreateSession
 {
     use AsAction;
 
-    public function handle(User $user, PomodoroSessionSetting $settings): Model
+    public function handle(array $data): Model
     {
-        return $user->pomodoroSessions()->create([]);
+        if (isset($data['settings_id'])) {
+            // TODO implement create custom session
+        }
+        if (isset($data['goals'])) {
+            return CreateDefaultSession::run($data['goals']);
+        }
+        return CreateDefaultSession::run();
     }
 
     public function rules(): array
@@ -25,15 +31,8 @@ class CreateSession
         ];
     }
 
-    public function asController(ActionRequest $request)
+    public function asController(ActionRequest $request): Model
     {
-        $data = $request->validated();
-        if (isset($data['settings_id'])) {
-            // TODO implement create custom session
-        }
-        if (isset($data['goals'])) {
-            return CreateDefaultSession::run($data['goals']);
-        }
-        return CreateDefaultSession::run();
+        return $this->handle($request->validated());
     }
 }
