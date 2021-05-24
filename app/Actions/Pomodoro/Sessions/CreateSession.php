@@ -17,10 +17,8 @@ class CreateSession
         if (isset($data['settings_id'])) {
             // TODO implement create custom session
         }
-        if (isset($data['goals'])) {
-            return CreateDefaultSession::run($data['goals']);
-        }
-        return CreateDefaultSession::run();
+
+        return CreateDefaultSession::run($data);
     }
 
     public function rules(): array

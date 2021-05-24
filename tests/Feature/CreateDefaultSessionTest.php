@@ -37,7 +37,10 @@ class CreateDefaultSessionTest extends TestCase
     public function testCreateDefaultSessionWithGoals()
     {
         $this->actingAs($user =User::factory()->create());
-        CreateDefaultSession::run(self::DEFAULT_SESSION_VALUES['goals']);
+        CreateDefaultSession::run(
+            [ 'goals' => self::DEFAULT_SESSION_VALUES['goals']]
+        );
+
         $session = $user->fresh()->pomodoroSessions->first();
         $this->assertDefaultSessionValues($session);
     }
