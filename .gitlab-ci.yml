@@ -41,7 +41,9 @@ pages:
     - cp .env.test .env
     - composer install
     - php artisan key:generate
-    - ./vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=reports/cobertura.xml
+    - ./vendor/bin/phpunit --coverage-text --colors=never -c phpunit.xml
+    - rm -rf ./public
+    - cp -R reports/html/ ./public
   artifacts:
     paths:
       - public

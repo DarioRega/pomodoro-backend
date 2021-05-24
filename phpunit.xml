@@ -24,7 +24,7 @@
             <file>app/Console/Kernel.php</file>
         </exclude>
         <report>
-<!--        <html outputDirectory="reports/coverage"/>-->
+            <html outputDirectory="reports/html"/>
             <cobertura outputFile="reports/cobertura.xml"/>
         </report>
     </coverage>
