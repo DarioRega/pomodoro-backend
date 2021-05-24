@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StepStatus;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -48,6 +49,19 @@ class Step extends Model
         'duration',
         'resting_time',
     ];
+
+    /**
+     * Get the user's full name.
+     *
+     * @return StepStatus
+     */
+    public function getStatusAttribute(): StepStatus
+    {
+        if ($this->started_at !== null) {
+            return StepStatus::IN_PROGRESS();
+        }
+        return StepStatus::PENDING();
+    }
 
     /**
      * Get the sessions for this user.

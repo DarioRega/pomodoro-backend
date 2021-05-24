@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Actions\Pomodoro\Steps\Create\CreateStep;
+use App\Enums\StepStatus;
 use App\Enums\StepType;
 use App\Models\PomodoroSession;
 use App\Models\Step;
@@ -42,6 +43,7 @@ class CreateStepTest extends TestCase
             $step->type
         );
 
+        $this->assertEquals(StepStatus::PENDING(), $step->status);
         $this->assertStepNullFields($step);
     }
 
@@ -73,6 +75,7 @@ class CreateStepTest extends TestCase
             $step->type
         );
 
+        $this->assertEquals(StepStatus::PENDING(), $step->status);
         $this->assertStepNullFields($step);
     }
 
@@ -104,6 +107,7 @@ class CreateStepTest extends TestCase
             $step->type
         );
 
+        $this->assertEquals(StepStatus::PENDING(), $step->status);
         $this->assertStepNullFields($step);
     }
 
