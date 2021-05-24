@@ -2,10 +2,43 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\PomodoroSession
+ *
+ * @property int $id
+ * @property string|null $goals
+ * @property string $pomodoro_duration
+ * @property string $small_break_duration
+ * @property string $big_break_duration
+ * @property int $pomodoro_quantity
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property int $user_id
+ * @property-read Collection|Step[] $steps
+ * @property-read int|null $steps_count
+ * @property-read User $user
+ * @method static Builder|PomodoroSession newModelQuery()
+ * @method static Builder|PomodoroSession newQuery()
+ * @method static Builder|PomodoroSession query()
+ * @method static Builder|PomodoroSession whereBigBreakDuration($value)
+ * @method static Builder|PomodoroSession whereCreatedAt($value)
+ * @method static Builder|PomodoroSession whereGoals($value)
+ * @method static Builder|PomodoroSession whereId($value)
+ * @method static Builder|PomodoroSession wherePomodoroDuration($value)
+ * @method static Builder|PomodoroSession wherePomodoroQuantity($value)
+ * @method static Builder|PomodoroSession whereSmallBreakDuration($value)
+ * @method static Builder|PomodoroSession whereUpdatedAt($value)
+ * @method static Builder|PomodoroSession whereUserId($value)
+ * @mixin Eloquent
+ */
 class PomodoroSession extends Model
 {
     /**
