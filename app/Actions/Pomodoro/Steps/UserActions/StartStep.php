@@ -13,9 +13,7 @@ class StartStep
     public function handle(Step $step): Step
     {
         $step->started_at = now();
-        $step->actions()->create([
-            'action' => StepAction::START()
-        ]);
+        LogAction::run($step, StepAction::START());
         return $step;
     }
 }

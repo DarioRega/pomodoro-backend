@@ -31,6 +31,7 @@ class StepAction extends Model
 {
     protected $fillable = [
         'action',
+        'step_id',
     ];
 
     /**
