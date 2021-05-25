@@ -31,7 +31,7 @@ tests:
     - php artisan key:generate
     - ./vendor/bin/phpunit --coverage-text --colors=never --testdox -c phpunit.xml
     - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
-    - sed 's/\/builds\/seelo\/pomodoro\/backend\/app/backend\/app\//' reports/formated_cobertura.xml > reports/formated_cobertura2.xml
+    - sed 's/\/builds\/seelo\/pomodoro\/backend\/app/backend\/app/' reports/formated_cobertura.xml > reports/formated_cobertura2.xml
   artifacts:
     expose_as: "test reports"
     paths:
