@@ -15,7 +15,6 @@ class StepsUserActionsTest extends TestCase
 
     public function testStartStep()
     {
-        $this->markTestSkipped('Test skipping');
         $session = $this->createSession();
         CreateSessionSteps::run($session);
         $step = $session->fresh()->steps()->first();
