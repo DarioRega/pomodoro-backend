@@ -29,8 +29,8 @@ tests:
     - cp .env.test .env
     - composer install
     - php artisan key:generate
-    - php artisan test
-    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
+    - ./vendor/bin/phpunit --coverage-text --colors=never --testdox -c phpunit.xml
+    - sed 's/filename="/filename="app\//' reports/cobertura.xml > reports/formated_cobertura.xml
   artifacts:
     expose_as: "test reports"
     paths:
@@ -56,5 +56,7 @@ pages:
     reports:
       cobertura: reports/cobertura.xml
     expire_in: 7 day
+  needs:
+    - tests
   only:
     - master
