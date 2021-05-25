@@ -29,17 +29,16 @@ tests:
     - cp .env.test .env
     - composer install
     - php artisan key:generate
-    - ./vendor/bin/phpunit --coverage-text --colors=never --testdox -c phpunit.xml
-#    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
-#    - sed 's/\/builds\/seelo\/pomodoro\/backend\/app/backend\/app/' reports/formated_cobertura.xml > reports/formated_cobertura2.xml
+    - php aritsan test
+    - ./vendor/bin/phpunit --coverage-text --colors=never -c phpunit.xml
   artifacts:
-    expose_as: "test reports"
+    expose_as: "Test reports"
     paths:
-      - reports/
+      - cobertura.xml
+      - junit.xml
     reports:
-      cobertura: reports/cobertura.xml
-      junit:
-        - reports/junit.xml
+      cobertura: cobertura.xml
+      junit: junit.xml
 
 pages:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG

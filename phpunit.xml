@@ -25,11 +25,11 @@
         </exclude>
         <report>
             <html outputDirectory="reports/html"/>
-            <cobertura outputFile="reports/cobertura.xml"/>
+            <cobertura outputFile="cobertura.xml"/>
         </report>
     </coverage>
     <logging>
-        <junit outputFile="reports/junit.xml"/>
+        <junit outputFile="junit.xml"/>
     </logging>
     <php>
         <server name="APP_ENV" value="testing"/>
