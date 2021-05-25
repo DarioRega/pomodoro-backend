@@ -30,12 +30,13 @@ tests:
     - composer install
     - php artisan key:generate
     - php artisan test
+    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
   artifacts:
     expose_as: "test reports"
     paths:
       - reports/
     reports:
-      cobertura: reports/cobertura.xml
+      cobertura: reports/formated_cobertura.xml
       junit:
         - reports/junit.xml
 
