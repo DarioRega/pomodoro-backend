@@ -30,7 +30,8 @@ tests:
     - composer install
     - php artisan key:generate
     - ./vendor/bin/phpunit --coverage-text --colors=never --testdox -c phpunit.xml
-    - sed 's/filename="/filename="app\//' reports/cobertura.xml > reports/formated_cobertura.xml
+    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
+    - sed 's/\/builds\/seelo\/pomodoro\/backend\/app/backend\/app\//' reports/formated_cobertura.xml > reports/formated_cobertura.xml
   artifacts:
     expose_as: "test reports"
     paths:
@@ -53,8 +54,6 @@ pages:
   artifacts:
     paths:
       - public
-    reports:
-      cobertura: reports/cobertura.xml
     expire_in: 7 day
   needs:
     - tests
