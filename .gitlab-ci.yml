@@ -29,7 +29,7 @@ tests:
     - cp .env.test .env
     - composer install
     - php artisan key:generate
-    - php aritsan test
+    - php artisan test
     - ./vendor/bin/phpunit --coverage-text --colors=never -c phpunit.xml
   artifacts:
     expose_as: "Test reports"
