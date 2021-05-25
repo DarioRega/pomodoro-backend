@@ -29,6 +29,10 @@ use Illuminate\Support\Carbon;
  */
 class StepAction extends Model
 {
+    protected $fillable = [
+        'action',
+    ];
+
     /**
      * Get this action's step.
      */
