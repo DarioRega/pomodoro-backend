@@ -19,6 +19,6 @@ class CreateSmallBreakStep
             'resting_time' => $session->small_break_duration,
         ]);
 
-        return $session->steps()->latest()->first();
+        return $session->steps->last();
     }
 }

@@ -12,25 +12,41 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class StartStep
 {
     use AsAction;
+    private Step $step;
 
     /**
      * @throws InvalidStepActionException
      */
     public function handle(Step $step): Step
     {
-        $this->validate($step);
+
+        $this->step = $step;
+        $this->validate();
+
         $step->started_at = now();
+        $step->save();
+
         LogAction::run($step, StepAction::START());
-        return $step;
+        return $step->fresh();
     }
 
     /**
      * @throws InvalidStepActionException
      */
-    private function validate(Step $step)
+    private function validate()
     {
-        if (StepStatus::IN_PROGRESS()->is($step->status)) {
-            throw new InvalidStepActionException(__('Action already started'));
+        $status = $this->step->status;
+
+        if (StepStatus::IN_PROGRESS()->is($status)) {
+            throw new InvalidStepActionException(__('Step already started'));
+        }
+
+        if (StepStatus::SKIPPED()->is($status)) {
+            throw new InvalidStepActionException(__('Cannot restart a skipped step'));
+        }
+
+        if (StepStatus::DONE()->is($status)) {
+            throw new InvalidStepActionException(__('Cannot restart a finished step'));
         }
     }
 }

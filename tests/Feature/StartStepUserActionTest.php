@@ -10,7 +10,7 @@ use App\Exceptions\InvalidStepActionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class StepsUserActionsTest extends TestCase
+class StartStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
     use Sessions;
@@ -25,8 +25,7 @@ class StepsUserActionsTest extends TestCase
 
         $this->assertNotNull($step->started_at);
         $this->assertEquals(StepStatus::IN_PROGRESS, $step->status);
-        $this->assertEquals(StepStatus::IN_PROGRESS, $step->status);
-        $this->assertEquals(StepAction::START(), $action->action);
+        $this->assertEquals(StepAction::START, $action->action);
     }
 
     public function testCannotStartStepInProgress()
@@ -37,17 +36,8 @@ class StepsUserActionsTest extends TestCase
         $step = StartStep::run($step);
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectErrorMessage(__('Action already started'));
+        $this->expectErrorMessage(__('Step already started'));
         StartStep::run($step);
-    }
-
-    public function testCannotStartStepDone()
-    {
-        // TODO
-        $this->markTestSkipped('TODO testCannotStartStepDone');
-
-        $this->expectException(InvalidStepActionException::class);
-        $this->expectErrorMessage(__('Cannot restart a finished step'));
     }
 
     public function testCannotStartStepSkipped()
@@ -59,14 +49,13 @@ class StepsUserActionsTest extends TestCase
         $this->expectErrorMessage(__('Cannot restart a skipped step'));
     }
 
-    public function testPauseStep()
+    public function testCannotStartStepDone()
     {
-        $session = $this->createSession();
-        CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
-        $step = StartStep::run($step);
+        // TODO
+        $this->markTestSkipped('TODO testCannotStartStepDone');
 
-        $this->assertNotNull($step->started_at);
-        $this->assertEquals(StepStatus::IN_PROGRESS, $step->status);
+        $this->expectException(InvalidStepActionException::class);
+        $this->expectErrorMessage(__('Cannot restart a finished step'));
     }
+
 }

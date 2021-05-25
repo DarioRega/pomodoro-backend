@@ -6,7 +6,6 @@ use App\Enums\StepStatus;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -57,9 +56,16 @@ class Step extends Model
      */
     public function getStatusAttribute(): StepStatus
     {
-        if ($this->started_at !== null) {
+        $lastStepAction = $this->actions->last()->action ?? null;
+
+        if ($lastStepAction === \App\Enums\StepAction::START) {
             return StepStatus::IN_PROGRESS();
         }
+
+        if ($lastStepAction === \App\Enums\StepAction::PAUSE) {
+            return StepStatus::PAUSED();
+        }
+
         return StepStatus::PENDING();
     }
 
