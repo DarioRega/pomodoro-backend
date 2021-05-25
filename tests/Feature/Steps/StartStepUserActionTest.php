@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Steps;
 
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
@@ -8,6 +8,7 @@ use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Sessions;
 use Tests\TestCase;
 
 class StartStepUserActionTest extends TestCase
@@ -36,26 +37,25 @@ class StartStepUserActionTest extends TestCase
         $step = StartStep::run($step);
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectErrorMessage(__('Step already started'));
+        $this->expectExceptionMessage(__('Step already started'));
         StartStep::run($step);
     }
 
     public function testCannotStartStepSkipped()
     {
         // TODO
-        $this->markTestSkipped('TODO testCannotStartStepSkipped');
+        $this->markTestSkipped('TODO');
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectErrorMessage(__('Cannot restart a skipped step'));
+        $this->expectExceptionMessage(__('Cannot restart a skipped step'));
     }
 
     public function testCannotStartStepDone()
     {
         // TODO
-        $this->markTestSkipped('TODO testCannotStartStepDone');
+        $this->markTestSkipped('TODO');
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectErrorMessage(__('Cannot restart a finished step'));
+        $this->expectExceptionMessage(__('Cannot restart a finished step'));
     }
-
 }

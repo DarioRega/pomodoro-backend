@@ -67,6 +67,10 @@ class Step extends Model
             return StepStatus::PAUSED();
         }
 
+        if ($lastStepAction === \App\Enums\StepAction::RESUME) {
+            return StepStatus::IN_PROGRESS();
+        }
+
         return StepStatus::PENDING();
     }
 

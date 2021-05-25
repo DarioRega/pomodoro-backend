@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Steps;
 
 use App\Actions\Pomodoro\Steps\Create\CreateStep;
 use App\Enums\StepStatus;

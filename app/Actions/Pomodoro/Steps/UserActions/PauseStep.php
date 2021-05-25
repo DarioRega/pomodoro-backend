@@ -32,6 +32,10 @@ class PauseStep
     {
         $status = $this->step->status;
 
+        if (StepStatus::PENDING()->is($status)) {
+            throw new InvalidStepActionException(__('Cannot stop a pending step'));
+        }
+
         if (StepStatus::PAUSED()->is($status)) {
             throw new InvalidStepActionException(__('Step already paused'));
         }
