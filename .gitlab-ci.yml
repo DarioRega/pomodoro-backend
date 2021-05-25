@@ -31,6 +31,9 @@ tests:
     - php artisan key:generate
     - php artisan test
   artifacts:
+    expose_as: "test reports"
+    paths:
+      - reports/
     reports:
       cobertura: reports/cobertura.xml
       junit:
