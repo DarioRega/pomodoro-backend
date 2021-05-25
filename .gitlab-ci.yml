@@ -22,7 +22,7 @@ build_test_image:
     changes:
       - docker/gitlab_ci/Dockerfile
 
-test:features:
+tests:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
   stage: test
   script:
@@ -30,9 +30,15 @@ test:features:
     - composer install
     - php artisan key:generate
     - php artisan test
+    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
   artifacts:
+    expose_as: "test reports"
+    paths:
+      - reports/
     reports:
-      cobertura: reports/cobertura.xml
+      cobertura: reports/formated_cobertura.xml
+      junit:
+        - reports/junit.xml
 
 pages:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
