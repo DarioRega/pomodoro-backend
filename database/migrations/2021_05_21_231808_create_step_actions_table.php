@@ -9,11 +9,11 @@ class CreateStepActionsTable extends Migration
     public function up()
     {
         Schema::create('step_actions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('action');
             $table->timestamps();
 
-            $table->foreignId('step_id');
+            $table->foreignUuid('step_id');
         });
     }
 

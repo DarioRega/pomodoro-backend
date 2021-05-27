@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,7 +14,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\UserSettings
  *
- * @property int $id
+ * @property string $id
  * @property string $theme
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -31,7 +32,7 @@ use Illuminate\Support\Carbon;
  */
 class UserSettings extends Model
 {
-
+    use Uuids;
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
