@@ -14,6 +14,7 @@ class CreatePomodoroSessionsTable extends Migration
             $table->time('pomodoro_duration');
             $table->time('small_break_duration');
             $table->time('big_break_duration');
+            $table->timestamp('end_time')->nullable();
             $table->integer('pomodoro_quantity');
             $table->timestamps();
 

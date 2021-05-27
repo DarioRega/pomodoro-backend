@@ -13,6 +13,7 @@ class CreateStepsTable extends Migration
             $table->string('type');
             $table->time('duration');
             $table->timestamp('finished_at')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->timestamp('skipped_at')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->time('resting_time');

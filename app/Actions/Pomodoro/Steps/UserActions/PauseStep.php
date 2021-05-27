@@ -12,6 +12,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class PauseStep
 {
     use AsAction;
+    use CalculateTime;
     private Step $step;
 
     /**
@@ -22,6 +23,7 @@ class PauseStep
         $this->step = $step;
         $this->validate();
         LogAction::run($step, StepAction::PAUSE());
+        $this->calculateEndTime();
         return $step;
     }
 
