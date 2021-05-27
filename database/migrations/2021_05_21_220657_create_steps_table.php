@@ -9,7 +9,7 @@ class CreateStepsTable extends Migration
     public function up()
     {
         Schema::create('steps', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('type');
             $table->time('duration');
             $table->timestamp('finished_at')->nullable();
@@ -18,7 +18,7 @@ class CreateStepsTable extends Migration
             $table->time('resting_time');
             $table->timestamps();
 
-            $table->foreignId('pomodoro_session_id');
+            $table->foreignUuid('pomodoro_session_id');
         });
     }
 

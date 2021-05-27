@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +15,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\PomodoroSession
  *
- * @property int $id
+ * @property string $id
  * @property string|null $goals
  * @property string $pomodoro_duration
  * @property string $small_break_duration
@@ -44,6 +45,7 @@ use Illuminate\Support\Carbon;
 class PomodoroSession extends Model
 {
     use HasFactory;
+    use Uuids;
     /**
      * The attributes that are mass assignable.
      *

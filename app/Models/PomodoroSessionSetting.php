@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\PomodoroSessionSetting
  *
- * @property int $id
+ * @property string $id
  * @property string|null $name
  * @property string $pomodoro_duration
  * @property string $small_break_duration
@@ -37,6 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class PomodoroSessionSetting extends Model
 {
+    use Uuids;
     /**
      * Get this setting owner user
      */

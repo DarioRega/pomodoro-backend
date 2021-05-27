@@ -9,7 +9,7 @@ class CreatePomodoroSessionSettingsTable extends Migration
     public function up()
     {
         Schema::create('pomodoro_session_settings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->nullable();
             $table->time('pomodoro_duration');
             $table->time('small_break_duration');
@@ -17,7 +17,7 @@ class CreatePomodoroSessionSettingsTable extends Migration
             $table->integer('pomodoro_quantity');
             $table->timestamps();
 
-            $table->foreignId('user_setting_id');
+            $table->foreignUuid('user_setting_id');
         });
     }
 

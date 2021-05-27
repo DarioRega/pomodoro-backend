@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\StepAction
  *
- * @property int $id
+ * @property string $id
  * @property string $action
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  */
 class StepAction extends Model
 {
+    use Uuids;
     protected $fillable = [
         'action',
         'step_id',

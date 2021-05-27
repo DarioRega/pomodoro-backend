@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\StepStatus;
+use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,7 +15,7 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\Step
  *
- * @property int $id
+ * @property string $id
  * @property string $type
  * @property string $duration
  * @property string|null $finished_at
@@ -44,6 +45,7 @@ use Illuminate\Support\Carbon;
  */
 class Step extends Model
 {
+    use Uuids;
     protected $fillable = [
         'type',
         'duration',
