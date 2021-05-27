@@ -33,7 +33,7 @@ class PauseStep
         $status = $this->step->status;
 
         if (StepStatus::PENDING()->is($status)) {
-            throw new InvalidStepActionException(__('Cannot stop a pending step'));
+            throw new InvalidStepActionException(__('Cannot pause a pending step'));
         }
 
         if (StepStatus::PAUSED()->is($status)) {
@@ -41,11 +41,11 @@ class PauseStep
         }
 
         if (StepStatus::SKIPPED()->is($status)) {
-            throw new InvalidStepActionException(__('Cannot stop a skipped step'));
+            throw new InvalidStepActionException(__('Cannot pause a skipped step'));
         }
 
         if (StepStatus::DONE()->is($status)) {
-            throw new InvalidStepActionException(__('Cannot stop a finished step'));
+            throw new InvalidStepActionException(__('Cannot pause a finished step'));
         }
     }
 }

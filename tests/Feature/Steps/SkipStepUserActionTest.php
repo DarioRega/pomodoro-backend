@@ -12,18 +12,18 @@ use Tests\Feature\Sessions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class PauseStepUserActionTest extends TestCase
+class SkipStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
     use Sessions;
 
-    public function testPauseStep()
+    public function testSkipStep()
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
         $step = $session->fresh()->steps()->first();
         StartStep::run($step);
-        PauseStep::run($step->fresh());
+        PauseStep::run($step);
 
         $step = $step->fresh();
         $this->assertNotNull($step->started_at);
@@ -37,27 +37,6 @@ class PauseStepUserActionTest extends TestCase
         $this->markTestSkipped('TODO');
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectExceptionMessage(__('Cannot pause a finished step'));
-    }
-
-    public function testCannotPauseStepSkipped()
-    {
-        // TODO
-        $this->markTestSkipped('TODO');
-
-        $this->expectException(InvalidStepActionException::class);
-        $this->expectExceptionMessage(__('Cannot pause a skipped step'));
-    }
-
-    public function testCannotPauseStepPending()
-    {
-        $session = $this->createSession();
-        CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
-
-        $this->expectException(InvalidStepActionException::class);
-        $this->expectExceptionMessage(__('Cannot pause a pending step'));
-
-        PauseStep::run($step);
+        $this->expectExceptionMessage(__('Cannot skip a finished step'));
     }
 }
