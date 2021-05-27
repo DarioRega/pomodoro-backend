@@ -23,7 +23,7 @@ class SkipStepUserActionTest extends TestCase
         CreateSessionSteps::run($session);
         $step = $session->fresh()->steps()->first();
         StartStep::run($step);
-        PauseStep::run($step);
+        PauseStep::run($step->fresh());
 
         $step = $step->fresh();
         $this->assertNotNull($step->started_at);
