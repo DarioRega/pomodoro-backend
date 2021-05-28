@@ -22,7 +22,7 @@ class EndTimeStepTest extends TestCase
     public function testStartEndTimeIsCalculated(string $hour, string $min, string $sec)
     {
         $session = $this->createSessionWithSteps();
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         $step = $step->fresh();
         $step->resting_time = "$hour:$min:$sec";
@@ -45,7 +45,7 @@ class EndTimeStepTest extends TestCase
     public function testResumeEndTimeIsCalculated(string $hour, string $min, string $sec)
     {
         $session = $this->createSessionWithSteps();
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         StartStep::run($step);
         PauseStep::run($step->fresh());

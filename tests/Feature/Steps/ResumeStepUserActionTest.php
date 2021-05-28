@@ -22,7 +22,7 @@ class ResumeStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         StartStep::run($step->fresh());
         PauseStep::run($step->fresh());
@@ -55,7 +55,7 @@ class ResumeStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         StartStep::run($step->fresh());
 
@@ -69,7 +69,7 @@ class ResumeStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('The step need to be paused'));

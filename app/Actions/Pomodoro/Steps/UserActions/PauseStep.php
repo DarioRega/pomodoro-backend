@@ -26,7 +26,8 @@ class PauseStep
         $this->validate();
         LogAction::run($step, StepAction::PAUSE());
         $this->unsetEndTime();
-        return $step;
+
+        return $this->step->fresh();
     }
 
     /**

@@ -27,7 +27,8 @@ class ResumeStep
         $this->validate();
         LogAction::run($step, StepAction::RESUME());
         $this->calculateStepEndTime();
-        return $step->fresh();
+
+        return $this->step->fresh();
     }
 
     /**

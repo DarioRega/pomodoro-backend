@@ -20,7 +20,7 @@ class StartStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
         $step = StartStep::run($step);
         $action = $step->actions()->first();
 
@@ -33,7 +33,7 @@ class StartStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
         $step = StartStep::run($step);
 
         $this->expectException(InvalidStepActionException::class);

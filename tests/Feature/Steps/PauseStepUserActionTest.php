@@ -23,7 +23,7 @@ class PauseStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
         StartStep::run($step);
         PauseStep::run($step->fresh());
 
@@ -56,7 +56,7 @@ class PauseStepUserActionTest extends TestCase
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
-        $step = $session->fresh()->steps()->first();
+        $step = $this->getFirstSessionStep($session);
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a pending step'));

@@ -30,9 +30,9 @@ class StartStep
         $step->save();
 
         $this->calculateStepEndTime();
-
         LogAction::run($step, StepAction::START());
-        return $step->fresh();
+
+        return $this->step->fresh();
     }
 
     /**

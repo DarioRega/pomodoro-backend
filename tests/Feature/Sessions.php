@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Actions\Pomodoro\Sessions\CreateDefaultSession;
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
 use App\Models\PomodoroSession;
+use App\Models\Step;
 use App\Models\User;
 
 trait Sessions
@@ -23,5 +24,10 @@ trait Sessions
         $session = $this->createSession();
         CreateSessionSteps::run($session);
         return $session->fresh();
+    }
+
+    public function getFirstSessionStep($session): Step
+    {
+        return $session->fresh()->steps()->first();
     }
 }

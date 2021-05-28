@@ -73,6 +73,10 @@ class Step extends Model
             return StepStatus::IN_PROGRESS();
         }
 
+        if ($lastStepAction === \App\Enums\StepAction::SKIP) {
+            return StepStatus::SKIPPED();
+        }
+
         return StepStatus::PENDING();
     }
 
