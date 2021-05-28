@@ -30,7 +30,7 @@ class ResumeStepUserActionTest extends TestCase
         $step = $this->createPendingStep();
 
         $this->expectException(InvalidStepActionException::class);
-        $this->expectExceptionMessage(__('The step need to be paused'));
+        $this->expectExceptionMessage(__('Cannot resume a pending step'));
 
         ResumeStep::run($step);
     }

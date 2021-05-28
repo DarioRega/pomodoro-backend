@@ -39,7 +39,7 @@ class ResumeStep
         $status = $this->step->status;
 
         if (StepStatus::PENDING()->is($status)) {
-            throw new InvalidStepActionException(__('The step need to be paused'));
+            throw new InvalidStepActionException(__('Cannot resume a pending step'));
         }
 
         if (StepStatus::IN_PROGRESS()->is($status)) {
