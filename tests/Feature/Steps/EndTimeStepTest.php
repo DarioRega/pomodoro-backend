@@ -62,11 +62,11 @@ class EndTimeStepTest extends TestCase
     public function restingTimeProvider(): array
     {
         return [
-            '20 minutes'                       => ["00", "20", "00"],
-            '1 hour and 15 minutes'            => ["01", "15", "00"],
-            '1 hour, 5 minutes and 30 seconds' => ["01", "05", "30"],
-            '45 seconds'                       => ["00", "00", "00"],
-            '1 hour and 15 seconds'            => ["01", "00", "15"],
+            '20 minutes'            => ["00", "20", "00"],
+            '1 hour and 15 minutes' => ["01", "15", "00"],
+            '1 hour, 5 minutes'     => ["01", "05", "00"],
+            '45 minutes'            => ["00", "45", "00"],
+            '1 hour'                => ["01", "00", "00"],
         ];
     }
 }
