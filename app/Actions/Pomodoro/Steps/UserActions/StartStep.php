@@ -2,6 +2,7 @@
 
 namespace App\Actions\Pomodoro\Steps\UserActions;
 
+use App\Actions\Pomodoro\StepTime;
 use App\Actions\Pomodoro\Steps\LogAction;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
@@ -12,6 +13,8 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class StartStep
 {
     use AsAction;
+    use StepTime;
+
     private Step $step;
 
     /**
@@ -25,6 +28,8 @@ class StartStep
 
         $step->started_at = now();
         $step->save();
+
+        $this->calculateStepEndTime();
 
         LogAction::run($step, StepAction::START());
         return $step->fresh();

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Pomodoro\Steps\UserActions;
 
+use App\Actions\Pomodoro\StepTime;
 use App\Actions\Pomodoro\Steps\LogAction;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
@@ -12,6 +13,8 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class ResumeStep
 {
     use AsAction;
+    use StepTime;
+
     private Step $step;
 
     /**
@@ -23,6 +26,7 @@ class ResumeStep
         $this->step = $step;
         $this->validate();
         LogAction::run($step, StepAction::RESUME());
+        $this->calculateStepEndTime();
         return $step->fresh();
     }
 

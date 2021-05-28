@@ -3,6 +3,7 @@
 namespace App\Actions\Pomodoro\Steps\UserActions;
 
 use App\Actions\Pomodoro\Steps\LogAction;
+use App\Actions\Pomodoro\StepTime;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
@@ -12,7 +13,8 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class PauseStep
 {
     use AsAction;
-    use CalculateTime;
+    use StepTime;
+
     private Step $step;
 
     /**
@@ -23,7 +25,7 @@ class PauseStep
         $this->step = $step;
         $this->validate();
         LogAction::run($step, StepAction::PAUSE());
-        $this->calculateEndTime();
+        $this->unsetEndTime();
         return $step;
     }
 

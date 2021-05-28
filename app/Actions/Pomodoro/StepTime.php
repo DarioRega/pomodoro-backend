@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Actions\Pomodoro\Steps\UserActions;
+namespace App\Actions\Pomodoro;
 
 use Illuminate\Support\Carbon;
 
-trait CalculateTime
+trait StepTime
 {
-    public function calculateEndTime()
+    public function calculateStepEndTime()
     {
         $restingTime = $this->createFromTime($this->step->resting_time);
         $this->step->end_time = now()
             ->addHours($restingTime->hour)
             ->addMinutes($restingTime->minute)
             ->addSeconds($restingTime->second);
+        $this->step->save();
+    }
+
+    public function unsetEndTime()
+    {
+        $this->step->end_time = null;
         $this->step->save();
     }
 
