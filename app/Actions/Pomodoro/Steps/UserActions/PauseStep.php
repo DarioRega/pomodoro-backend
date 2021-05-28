@@ -22,7 +22,7 @@ class PauseStep
      */
     public function handle(Step $step): Step
     {
-        $this->step = $step;
+        $this->step = $step->fresh();
         $this->validate();
         LogAction::run($step, StepAction::PAUSE());
         $this->unsetEndTime();

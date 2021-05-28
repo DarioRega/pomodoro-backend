@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class LogActionsTest extends TestCase
 {
     use RefreshDatabase;
-    use Sessions;
+    use SessionsAndSteps;
 
     /**
      * @dataProvider provider

@@ -23,7 +23,7 @@ class StartStep
     public function handle(Step $step): Step
     {
 
-        $this->step = $step;
+        $this->step = $step->fresh();
         $this->validate();
 
         $step->started_at = now();
@@ -44,6 +44,10 @@ class StartStep
 
         if (StepStatus::IN_PROGRESS()->is($status)) {
             throw new InvalidStepActionException(__('Step already started'));
+        }
+
+        if (StepStatus::PAUSED()->is($status)) {
+            throw new InvalidStepActionException(__('Cannot restart a paused step'));
         }
 
         if (StepStatus::SKIPPED()->is($status)) {

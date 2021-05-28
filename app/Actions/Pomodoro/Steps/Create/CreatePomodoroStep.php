@@ -18,6 +18,7 @@ class CreatePomodoroStep
             'duration' => $session->pomodoro_duration,
             'resting_time' => $session->pomodoro_duration,
         ]);
+        $session->save();
 
         return $session->steps->last();
     }

@@ -77,6 +77,10 @@ class Step extends Model
             return StepStatus::SKIPPED();
         }
 
+        if ($lastStepAction === \App\Enums\StepAction::FINISH) {
+            return StepStatus::DONE();
+        }
+
         return StepStatus::PENDING();
     }
 
@@ -91,7 +95,7 @@ class Step extends Model
     /**
      * Get the step's session
      */
-    public function session(): BelongsTo
+    public function pomodoroSession(): BelongsTo
     {
         return $this->belongsTo(PomodoroSession::class);
     }

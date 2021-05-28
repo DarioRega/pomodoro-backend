@@ -12,7 +12,7 @@ use Tests\TestCase;
 class CreateDefaultSessionTest extends TestCase
 {
     use RefreshDatabase;
-    use Sessions;
+    use SessionsAndSteps;
 
     public function testCreateDefaultSessionFromEndpoint()
     {

@@ -23,7 +23,7 @@ class ResumeStep
     public function handle(Step $step): Step
     {
 
-        $this->step = $step;
+        $this->step = $step->fresh();
         $this->validate();
         LogAction::run($step, StepAction::RESUME());
         $this->calculateStepEndTime();
@@ -38,6 +38,10 @@ class ResumeStep
     {
         $status = $this->step->status;
 
+        if (StepStatus::PENDING()->is($status)) {
+            throw new InvalidStepActionException(__('The step need to be paused'));
+        }
+
         if (StepStatus::IN_PROGRESS()->is($status)) {
             throw new InvalidStepActionException(__('Cannot resume a step in progress'));
         }
@@ -48,10 +52,6 @@ class ResumeStep
 
         if (StepStatus::DONE()->is($status)) {
             throw new InvalidStepActionException(__('Cannot resume a finished step'));
-        }
-
-        if (StepStatus::PENDING()->is($status)) {
-            throw new InvalidStepActionException(__('The step need to be paused'));
         }
     }
 }

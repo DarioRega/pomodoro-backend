@@ -5,25 +5,22 @@ namespace Tests\Feature\Steps;
 use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
 use App\Actions\Pomodoro\Steps\UserActions\PauseStep;
 use App\Actions\Pomodoro\Steps\UserActions\SkipStep;
-use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
-use Tests\Feature\Sessions;
+use Tests\Feature\SessionsAndSteps;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SkipStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
-    use Sessions;
+    use SessionsAndSteps;
 
     public function testSkipStep()
     {
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
-        $step = StartStep::run($step);
-        $step = PauseStep::run($step);
+        $step = $this->createPendingStep();
+
         $step = SkipStep::run($step);
 
         $this->assertNotNull($step->skipped_at);
@@ -33,9 +30,7 @@ class SkipStepUserActionTest extends TestCase
 
     public function testCannotSkipStepInProgress()
     {
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
-        $step = StartStep::run($step);
+        $step = $this->createInProgressStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot skip a step in progress'));
@@ -45,9 +40,7 @@ class SkipStepUserActionTest extends TestCase
 
     public function testCannotSkipStepSkipped()
     {
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
-        $step = SkipStep::run($step);
+        $step = $this->createSkippedStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Step is already skipped'));
@@ -57,12 +50,7 @@ class SkipStepUserActionTest extends TestCase
 
     public function testCannotSkipStepFinished()
     {
-        $this->markTestSkipped('Todo');
-
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
-        $step = StartStep::run($step);
-        $step = FinishStep::run($step);
+        $step = $this->createDoneStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot skip a finished step'));

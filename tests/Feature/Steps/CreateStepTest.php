@@ -5,6 +5,7 @@ namespace Tests\Feature\Steps;
 use App\Actions\Pomodoro\Steps\Create\CreateStep;
 use App\Enums\StepStatus;
 use App\Enums\StepType;
+use App\Exceptions\InvalidStepActionException;
 use App\Models\PomodoroSession;
 use App\Models\Step;
 use App\Models\User;
@@ -21,7 +22,6 @@ class CreateStepTest extends TestCase
         $session = PomodoroSession::factory()->for($user)->create();
 
         $step = CreateStep::run(StepType::POMODORO(), $session);
-        $step = $step->fresh();
 
         $this->assertEquals(
             $session->id,
@@ -41,6 +41,11 @@ class CreateStepTest extends TestCase
         $this->assertEquals(
             StepType::POMODORO(),
             $step->type
+        );
+
+        $this->assertEquals(
+            $session->id,
+            $step->pomodoroSession->id
         );
 
         $this->assertEquals(StepStatus::PENDING(), $step->status);
@@ -116,5 +121,19 @@ class CreateStepTest extends TestCase
         $this->assertNull($step->started_at);
         $this->assertNull($step->skipped_at);
         $this->assertNull($step->finished_at);
+    }
+
+    public function testCannotCreateStepWithInvalidType()
+    {
+        $user = User::factory()->create();
+        $session = PomodoroSession::factory()->for($user)->create();
+
+        $stepType = StepType::BIG_BREAK();
+        $stepType->value = 'SuperLongBreak';
+
+        $this->expectException(InvalidStepActionException::class);
+        $this->expectExceptionMessage('Invalid step type: SuperLongBreak');
+
+        CreateStep::run($stepType, $session);
     }
 }

@@ -3,17 +3,16 @@
 namespace Tests\Feature\Steps;
 
 use App\Actions\Pomodoro\StepTime;
-use App\Actions\Pomodoro\Steps\UserActions\PauseStep;
 use App\Actions\Pomodoro\Steps\UserActions\ResumeStep;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
-use Tests\Feature\Sessions;
+use Tests\Feature\SessionsAndSteps;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EndTimeStepTest extends TestCase
 {
     use RefreshDatabase;
-    use Sessions;
+    use SessionsAndSteps;
     use StepTime;
 
     /**
@@ -21,8 +20,7 @@ class EndTimeStepTest extends TestCase
      */
     public function testStartEndTimeIsCalculated(string $hour, string $min, string $sec)
     {
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
+        $step = $this->createPendingStep();
 
         $step = $step->fresh();
         $step->resting_time = "$hour:$min:$sec";
@@ -44,17 +42,13 @@ class EndTimeStepTest extends TestCase
      */
     public function testResumeEndTimeIsCalculated(string $hour, string $min, string $sec)
     {
-        $session = $this->createSessionWithSteps();
-        $step = $this->getFirstSessionStep($session);
-
-        StartStep::run($step);
-        PauseStep::run($step->fresh());
+        $step = $this->createPausedStep();
 
         $step = $step->fresh();
         $step->resting_time = "$hour:$min:$sec";
         $step->save();
 
-        ResumeStep::run($step->fresh());
+        ResumeStep::run($step);
 
         $expectedEndTime = now()->addHours($hour)->addMinutes($min)->addSeconds($sec);
 

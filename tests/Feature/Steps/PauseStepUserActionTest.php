@@ -3,31 +3,26 @@
 namespace Tests\Feature\Steps;
 
 use App\Actions\Pomodoro\StepTime;
-use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
 use App\Actions\Pomodoro\Steps\UserActions\PauseStep;
-use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
-use Tests\Feature\Sessions;
+use Tests\Feature\SessionsAndSteps;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PauseStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
-    use Sessions;
+    use SessionsAndSteps;
     use StepTime;
 
     public function testPauseStep()
     {
-        $session = $this->createSession();
-        CreateSessionSteps::run($session);
-        $step = $this->getFirstSessionStep($session);
-        StartStep::run($step);
-        PauseStep::run($step->fresh());
+        $step = $this->createInProgressStep();
 
-        $step = $step->fresh();
+        $step = PauseStep::run($step);
+
         $this->assertNotNull($step->started_at);
         $this->assertNull($step->end_time);
         $this->assertEquals(StepStatus::PAUSED, $step->fresh()->status);
@@ -36,30 +31,40 @@ class PauseStepUserActionTest extends TestCase
 
     public function testCannotPauseStepDone()
     {
-        // TODO
-        $this->markTestSkipped('TODO');
+        $step = $this->createDoneStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a finished step'));
+
+        PauseStep::run($step);
     }
 
     public function testCannotPauseStepSkipped()
     {
-        // TODO
-        $this->markTestSkipped('TODO');
+        $step = $this->createSkippedStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a skipped step'));
+
+        PauseStep::run($step);
     }
 
     public function testCannotPauseStepPending()
     {
-        $session = $this->createSession();
-        CreateSessionSteps::run($session);
-        $step = $this->getFirstSessionStep($session);
+        $step = $this->createPendingStep();
 
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a pending step'));
+
+        PauseStep::run($step);
+    }
+
+    public function testCannotPauseStepPaused()
+    {
+        $step = $this->createPausedStep();
+
+        $this->expectException(InvalidStepActionException::class);
+        $this->expectExceptionMessage(__('Step already paused'));
 
         PauseStep::run($step);
     }
