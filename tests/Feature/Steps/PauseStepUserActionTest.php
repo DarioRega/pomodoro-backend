@@ -21,10 +21,11 @@ class PauseStepUserActionTest extends TestCase
     {
         $step = $this->createInProgressStep();
 
-        $step = PauseStep::run($step);
+        $step = PauseStep::run($step, '00:07:29');
 
         $this->assertNotNull($step->started_at);
         $this->assertNull($step->end_time);
+        $this->assertEquals('00:07:29', $step->resting_time);
         $this->assertEquals(StepStatus::PAUSED, $step->fresh()->status);
         $this->assertEquals(StepAction::PAUSE, $step->actions->last()->action);
     }
