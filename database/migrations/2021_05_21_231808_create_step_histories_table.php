@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStepActionsTable extends Migration
+class CreateStepHistoriesTable extends Migration
 {
     public function up()
     {
-        Schema::create('step_actions', function (Blueprint $table) {
+        Schema::create('step_histories', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('action');
             $table->timestamps();
@@ -19,6 +19,6 @@ class CreateStepActionsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('step_action_records');
+        Schema::dropIfExists('step_histories');
     }
 }

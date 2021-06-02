@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int $pomodoro_session_id
- * @property-read Collection|StepAction[] $actions
+ * @property-read Collection|StepHistory[] $actions
  * @property-read int|null $actions_count
  * @property-read PomodoroSession $session
  * @method static Builder|Step newModelQuery()
@@ -89,7 +89,7 @@ class Step extends Model
      */
     public function actions(): HasMany
     {
-        return $this->hasMany(StepAction::class);
+        return $this->hasMany(StepHistory::class);
     }
 
     /**
