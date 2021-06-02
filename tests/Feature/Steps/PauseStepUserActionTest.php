@@ -37,7 +37,7 @@ class PauseStepUserActionTest extends TestCase
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a finished step'));
 
-        PauseStep::run($step);
+        PauseStep::run($step, '00:05:00');
     }
 
     public function testCannotPauseStepSkipped()
@@ -47,7 +47,7 @@ class PauseStepUserActionTest extends TestCase
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a skipped step'));
 
-        PauseStep::run($step);
+        PauseStep::run($step, '00:05:00');
     }
 
     public function testCannotPauseStepPending()
@@ -57,7 +57,7 @@ class PauseStepUserActionTest extends TestCase
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Cannot pause a pending step'));
 
-        PauseStep::run($step);
+        PauseStep::run($step, '00:05:00');
     }
 
     public function testCannotPauseStepPaused()
@@ -67,6 +67,6 @@ class PauseStepUserActionTest extends TestCase
         $this->expectException(InvalidStepActionException::class);
         $this->expectExceptionMessage(__('Step already paused'));
 
-        PauseStep::run($step);
+        PauseStep::run($step, '00:05:00');
     }
 }

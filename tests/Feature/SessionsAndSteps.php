@@ -51,7 +51,7 @@ trait SessionsAndSteps
     public function createPausedStep(): Step
     {
         $step = $this->createInProgressStep();
-        return PauseStep::run($step);
+        return PauseStep::run($step, '00:05:00');
     }
 
     public function createDoneStep(): Step
