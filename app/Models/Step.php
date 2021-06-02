@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StepStatus;
 use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,7 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int $pomodoro_session_id
- * @property-read Collection|StepAction[] $actions
+ * @property-read Collection|StepHistory[] $actions
  * @property-read int|null $actions_count
  * @property-read PomodoroSession $session
  * @method static Builder|Step newModelQuery()
@@ -52,17 +53,49 @@ class Step extends Model
     ];
 
     /**
+     * Get the user's full name.
+     *
+     * @return StepStatus
+     */
+    public function getStatusAttribute(): StepStatus
+    {
+        $lastStepAction = $this->actions->last()->action ?? null;
+
+        if ($lastStepAction === \App\Enums\StepAction::START) {
+            return StepStatus::IN_PROGRESS();
+        }
+
+        if ($lastStepAction === \App\Enums\StepAction::PAUSE) {
+            return StepStatus::PAUSED();
+        }
+
+        if ($lastStepAction === \App\Enums\StepAction::RESUME) {
+            return StepStatus::IN_PROGRESS();
+        }
+
+        if ($lastStepAction === \App\Enums\StepAction::SKIP) {
+            return StepStatus::SKIPPED();
+        }
+
+        if ($lastStepAction === \App\Enums\StepAction::FINISH) {
+            return StepStatus::DONE();
+        }
+
+        return StepStatus::PENDING();
+    }
+
+    /**
      * Get the sessions for this user.
      */
     public function actions(): HasMany
     {
-        return $this->hasMany(StepAction::class);
+        return $this->hasMany(StepHistory::class);
     }
 
     /**
      * Get the step's session
      */
-    public function session(): BelongsTo
+    public function pomodoroSession(): BelongsTo
     {
         return $this->belongsTo(PomodoroSession::class);
     }

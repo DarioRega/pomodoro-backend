@@ -18,19 +18,24 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property int $step_id
  * @property-read Step $step
- * @method static Builder|StepAction newModelQuery()
- * @method static Builder|StepAction newQuery()
- * @method static Builder|StepAction query()
- * @method static Builder|StepAction whereAction($value)
- * @method static Builder|StepAction whereCreatedAt($value)
- * @method static Builder|StepAction whereId($value)
- * @method static Builder|StepAction whereStepId($value)
- * @method static Builder|StepAction whereUpdatedAt($value)
+ * @method static Builder|StepHistory newModelQuery()
+ * @method static Builder|StepHistory newQuery()
+ * @method static Builder|StepHistory query()
+ * @method static Builder|StepHistory whereAction($value)
+ * @method static Builder|StepHistory whereCreatedAt($value)
+ * @method static Builder|StepHistory whereId($value)
+ * @method static Builder|StepHistory whereStepId($value)
+ * @method static Builder|StepHistory whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class StepAction extends Model
+class StepHistory extends Model
 {
     use Uuids;
+    protected $fillable = [
+        'action',
+        'step_id',
+    ];
+
     /**
      * Get this action's step.
      */

@@ -19,6 +19,6 @@ class CreateBigBreakStep
             'resting_time' => $session->big_break_duration,
         ]);
 
-        return $session->steps()->latest()->first();
+        return $session->steps->last();
     }
 }

@@ -30,15 +30,15 @@ tests:
     - composer install
     - php artisan key:generate
     - php artisan test
-    - sed 's/filename="/filename="backend\/app\//' reports/cobertura.xml > reports/formated_cobertura.xml
+    - ./vendor/bin/phpunit --coverage-text --colors=never -c phpunit.xml
   artifacts:
-    expose_as: "test reports"
+    expose_as: "Test reports"
     paths:
-      - reports/
+      - cobertura.xml
+      - junit.xml
     reports:
-      cobertura: reports/formated_cobertura.xml
-      junit:
-        - reports/junit.xml
+      cobertura: cobertura.xml
+      junit: junit.xml
 
 pages:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
@@ -53,8 +53,8 @@ pages:
   artifacts:
     paths:
       - public
-    reports:
-      cobertura: reports/cobertura.xml
     expire_in: 7 day
+  needs:
+    - tests
   only:
     - master

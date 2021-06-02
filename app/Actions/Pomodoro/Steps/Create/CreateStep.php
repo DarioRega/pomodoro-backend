@@ -3,6 +3,7 @@
 namespace App\Actions\Pomodoro\Steps\Create;
 
 use App\Enums\StepType;
+use App\Exceptions\InvalidStepActionException;
 use App\Models\PomodoroSession;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,6 @@ class CreateStep
             return CreateBigBreakStep::run($session);
         }
 
-        throw new Exception("Invalid step type: $stepType");
+        throw new InvalidStepActionException("Invalid step type: $stepType");
     }
 }
