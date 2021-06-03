@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Pomodoro\Sessions\CreateSession;
+use App\Actions\Pomodoro\Sessions\GetUserSessions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group([
+    'prefix' => 'user',
+    'middleware' => 'auth:sanctum'
+], function () {
+    Route::get('/', function (Request $request) {
+        return $request->user();
+    });
 
-Route::middleware('auth:sanctum')->post('/user/sessions', CreateSession::class);
+    Route::group([
+        'prefix' => 'sessions'
+    ], function () {
+        Route::post('/', CreateSession::class);
+        Route::get('/', GetUserSessions::class);
+    });
+});
