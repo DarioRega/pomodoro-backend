@@ -27,6 +27,7 @@ class FinishStep
         LogAction::run($step, StepAction::FINISH());
         $this->unsetEndTime();
 
+        $this->step->resting_time = '00:00:00';
         $this->step->finished_at = now();
         $this->step->save();
 
@@ -37,15 +38,6 @@ class FinishStep
      * @throws InvalidStepActionException
      */
     private function validate()
-    {
-        $this->validateStatus();
-
-        if ($this->step->resting_time !== '00:00:00') {
-            throw new InvalidStepActionException(__('Resting time must be 00:00:00 to finish a step'));
-        }
-    }
-
-    private function validateStatus()
     {
         $status = $this->step->status;
 

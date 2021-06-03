@@ -18,7 +18,7 @@ trait SessionsAndSteps
 {
     public function createSession(array $data = []): PomodoroSession
     {
-        Sanctum::actingAs($user =User::factory()->create());
+        Sanctum::actingAs($user = User::factory()->create());
         CreateDefaultSession::run($data);
         return $user->fresh()->pomodoroSessions->first();
     }

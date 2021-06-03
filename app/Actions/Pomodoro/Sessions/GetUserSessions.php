@@ -13,9 +13,7 @@ class GetUserSessions
 
     public function handle(User $user): Collection
     {
-        return PomodoroSession::whereUserId($user->id)
-            ->with(['steps', 'steps.actions'])
-            ->get();
+        return PomodoroSession::byUser($user)->get();
     }
 
     public function asController(): Collection
