@@ -1,12 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Sessions;
 
 use App\Models\PomodoroSession;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Data;
+use Tests\Feature\SessionsAndSteps;
 use Tests\TestCase;
 
 class CreateDefaultSessionTest extends TestCase
