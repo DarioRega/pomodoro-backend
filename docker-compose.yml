@@ -1,7 +1,7 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    laravel.test: &laravalBase
+    laravel.test: &laravelBase
         build:
             context: ./vendor/laravel/sail/runtimes/8.0
             dockerfile: Dockerfile
@@ -22,12 +22,12 @@ services:
 #            - redis
 #            - selenium
     laravel.pusher:
-      <<: *laravalBase
+      <<: *laravelBase
       ports:
         - '${PUSHER_APP_PORT:-6001}:6001'
       command: php artisan websockets:serve
     laravel.hotReload:
-      <<: *laravalBase
+      <<: *laravelBase
       ports:
         - '8080:8080'
       command: npm run hot
