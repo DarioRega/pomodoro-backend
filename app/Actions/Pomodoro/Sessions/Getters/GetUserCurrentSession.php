@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Pomodoro\Sessions;
+namespace App\Actions\Pomodoro\Sessions\Getters;
 
 use App\Enums\SessionStatus;
 use App\Models\PomodoroSession;
@@ -11,7 +11,7 @@ class GetUserCurrentSession
 {
     use AsAction;
 
-    public function handle(User $user): PomodoroSession|null
+    public function handle(User $user): ?PomodoroSession
     {
         $sessions = PomodoroSession::byUser($user)->get();
         return $sessions->filter(function (PomodoroSession $session) {
@@ -21,7 +21,7 @@ class GetUserCurrentSession
         })->first();
     }
 
-    public function asController(): PomodoroSession|null
+    public function asController(): ?PomodoroSession
     {
         return $this->handle(\Auth::user());
     }

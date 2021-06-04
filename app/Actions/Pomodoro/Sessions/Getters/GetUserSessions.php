@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Pomodoro\Sessions;
+namespace App\Actions\Pomodoro\Sessions\Getters;
 
 use App\Models\PomodoroSession;
 use App\Models\User;
