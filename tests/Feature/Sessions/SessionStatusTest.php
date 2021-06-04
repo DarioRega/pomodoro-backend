@@ -3,6 +3,7 @@
 namespace Tests\Feature\Sessions;
 
 use App\Actions\Pomodoro\Sessions\AbortSession;
+use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
 use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Enums\SessionStatus;
@@ -26,14 +27,14 @@ class SessionStatusTest extends TestCase
     public function testSessionInProgress()
     {
         $this->createInProgressStep();
-        $session = PomodoroSession::currentByUser(Auth::user());
+        $session = GetUserCurrentSession::run(Auth::user());
         $this->assertEquals(SessionStatus::IN_PROGRESS, $session->status);
     }
 
     public function testSessionPaused()
     {
         $this->createPausedStep();
-        $session = PomodoroSession::currentByUser(Auth::user());
+        $session = GetUserCurrentSession::run(Auth::user());
         $this->assertEquals(SessionStatus::PAUSED, $session->status);
     }
 
