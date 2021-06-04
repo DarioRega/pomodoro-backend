@@ -89,6 +89,10 @@ class PomodoroSession extends Model
             return SessionStatus::IN_PROGRESS();
         }
 
+        if ($this->hasPendingAndDoneSteps()) {
+            return SessionStatus::IN_PROGRESS();
+        }
+
         if ($this->hasStepWithStatus(StepStatus::PAUSED())) {
             return SessionStatus::PAUSED();
         }
@@ -107,6 +111,11 @@ class PomodoroSession extends Model
         })->count() > 0;
     }
 
+    private function hasPendingAndDoneSteps(): bool
+    {
+        return $this->hasStepWithStatus(StepStatus::PENDING()) && $this->hasStepWithStatus(StepStatus::DONE());
+    }
+
     /**
      * Get the session user.
      */
@@ -120,18 +129,5 @@ class PomodoroSession extends Model
         return $query
             ->whereUserId($user->id)
             ->with(['steps', 'steps.actions']);
-    }
-
-    public function scopeCurrentByUser($query, User $user)
-    {
-        return $query
-            ->whereUserId($user->id)
-            ->with(['steps', 'steps.actions'])
-            ->get()
-            ->filter(function (PomodoroSession $session) {
-                return SessionStatus::IN_PROGRESS()->is($session->status) ||
-                    SessionStatus::PAUSED()->is($session->status);
-            })
-            ->first();
     }
 }

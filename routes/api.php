@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Pomodoro\Sessions\CreateSession;
+use App\Actions\Pomodoro\Sessions\GetUserCurrentSession;
 use App\Actions\Pomodoro\Sessions\GetUserSessions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,11 @@ Route::group([
     ], function () {
         Route::post('/', CreateSession::class);
         Route::get('/', GetUserSessions::class);
+
+        Route::group([
+            'prefix' => 'current'
+        ], function () {
+            Route::get('/', GetUserCurrentSession::class);
+        });
     });
 });

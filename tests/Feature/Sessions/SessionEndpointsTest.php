@@ -10,15 +10,18 @@ class SessionEndpointsTest extends TestCase
 {
     use SessionsAndSteps;
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
     public function testGetUserSessions()
     {
         $this->createSessionWithSteps();
         $response = $this->get('/api/user/sessions');
+        $response->assertStatus(200);
+    }
+
+    public function testGetUserCurrentSession()
+    {
+        $this->createInProgressStep();
+        $response = $this->get('/api/user/sessions/current');
         $response->assertStatus(200);
     }
 }
