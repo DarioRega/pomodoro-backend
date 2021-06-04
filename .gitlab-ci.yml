@@ -39,6 +39,10 @@ tests:
     reports:
       cobertura: cobertura.xml
       junit: junit.xml
+  retry:
+    max: 2
+    when:
+      - always
 
 pages:
   image: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$ENV_TAG
@@ -58,3 +62,7 @@ pages:
     - tests
   only:
     - master
+  retry:
+    max: 2
+    when:
+      - always
