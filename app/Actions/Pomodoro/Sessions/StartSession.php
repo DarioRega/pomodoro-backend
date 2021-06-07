@@ -3,6 +3,7 @@
 namespace App\Actions\Pomodoro\Sessions;
 
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
+use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Exceptions\InvalidStepActionException;
 use App\Models\PomodoroSession;
 use Illuminate\Http\JsonResponse;
@@ -11,7 +12,7 @@ use Illuminate\Validation\UnauthorizedException;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class AbortSession
+class StartSession
 {
     use AsAction;
 
@@ -21,25 +22,14 @@ class AbortSession
     public function handle(PomodoroSession $session): PomodoroSession
     {
         $this->validate($session);
-
-        $session->aborted_at = now();
-        $session->save();
-
-        return $session->fresh();
+        StartStep::run($session->steps->first());
+        return PomodoroSession::whereId($session->id)->with(['steps', 'steps.actions'])->first();
     }
 
-    public function asController(ActionRequest $request): JsonResponse|PomodoroSession|null
+    public function asController(ActionRequest $request, PomodoroSession $session): JsonResponse|PomodoroSession
     {
-        $currentSession = GetUserCurrentSession::run($request->user());
-
-        if ($currentSession === null) {
-            return response()->json([
-                'message' => __('You have no current session'),
-            ], '404');
-        }
-
         try {
-            return $this->handle($currentSession);
+            return $this->handle($session);
         } catch (InvalidStepActionException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -57,7 +47,11 @@ class AbortSession
     public function validate(PomodoroSession $session)
     {
         if (Auth::id() !== $session->user_id) {
-            throw new UnauthorizedException(__('You are not allowed to abort this session'));
+            throw new UnauthorizedException(__('You are not allowed to start this session'));
+        }
+
+        if (GetUserCurrentSession::run(Auth::user()) !== null) {
+            throw new InvalidStepActionException(__('You cannot have 2 session running'));
         }
     }
 }

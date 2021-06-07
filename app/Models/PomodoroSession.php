@@ -85,16 +85,16 @@ class PomodoroSession extends Model
             return SessionStatus::ABORTED();
         }
 
+        if ($this->hasStepWithStatus(StepStatus::PAUSED())) {
+            return SessionStatus::PAUSED();
+        }
+
         if ($this->hasStepWithStatus(StepStatus::IN_PROGRESS())) {
             return SessionStatus::IN_PROGRESS();
         }
 
         if ($this->hasPendingAndDoneSteps()) {
             return SessionStatus::IN_PROGRESS();
-        }
-
-        if ($this->hasStepWithStatus(StepStatus::PAUSED())) {
-            return SessionStatus::PAUSED();
         }
 
         if ($this->hasStepWithStatus(StepStatus::PENDING())) {

@@ -1,8 +1,10 @@
 <?php
 
+use App\Actions\Pomodoro\Sessions\AbortSession;
 use App\Actions\Pomodoro\Sessions\CreateSession;
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
 use App\Actions\Pomodoro\Sessions\Getters\GetUserSessions;
+use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentSessionSteps;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Actions\Pomodoro\Steps\UserActions\RunActionIntoCurrentStep;
@@ -32,8 +34,13 @@ Route::group([
         Route::post('/', CreateSession::class);
         Route::get('/', GetUserSessions::class);
 
+        Route::group(['prefix' => '{session}'], function () {
+            Route::get('/start', StartSession::class);
+        });
+
         Route::group(['prefix' => 'current'], function () {
             Route::get('/', GetUserCurrentSession::class);
+            Route::get('/abort', AbortSession::class);
 
             Route::group(['prefix' => 'steps'], function () {
                 Route::get('/', GetUserCurrentSessionSteps::class);

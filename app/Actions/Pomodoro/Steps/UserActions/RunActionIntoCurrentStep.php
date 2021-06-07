@@ -4,6 +4,7 @@ namespace App\Actions\Pomodoro\Steps\UserActions;
 
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Enums\StepAction;
+use App\Events\UserAction;
 use App\Exceptions\InvalidStepActionException;
 use App\Models\Step;
 use App\Models\User;
@@ -24,6 +25,10 @@ class RunActionIntoCurrentStep
         ['type' => $type] = $data;
 
         $step = GetUserCurrentStep::run($user);
+
+        if ($step === null) {
+            throw new InvalidStepActionException(__('No current session available'));
+        }
 
         if (StepAction::START()->is($type)) {
             return StartStep::run($step);
@@ -62,7 +67,9 @@ class RunActionIntoCurrentStep
     public function asController(ActionRequest $request): Step|JsonResponse
     {
         try {
-            return $this->handle(Auth::user(), $request->validated());
+            $step = $this->handle(Auth::user(), $request->validated());
+            broadcast(new UserAction(Auth::user(), $step->pomodoroSession));
+            return $step;
         } catch (InvalidStepActionException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
