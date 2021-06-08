@@ -60,9 +60,12 @@ class StepsEndpointsTest extends TestCase
                 'createDoneStep',
                 '/current'
             ],
-            'Get User Current null Step' => [
+            'Get User Current no content Step' => [
                 'createSessionWithSteps',
-                '/current'
+                '/current',
+                'get',
+                [],
+                204
             ],
             'Start Current Step' => [
                 'createDoneStep',

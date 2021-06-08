@@ -5,6 +5,7 @@ namespace App\Actions\Pomodoro\Sessions\Getters;
 use App\Enums\SessionStatus;
 use App\Models\PomodoroSession;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetUserCurrentSession
@@ -21,8 +22,13 @@ class GetUserCurrentSession
         })->first();
     }
 
-    public function asController(): ?PomodoroSession
+    public function asController(): PomodoroSession|Response
     {
-        return $this->handle(\Auth::user());
+        $session = $this->handle(\Auth::user());
+
+        if ($session === null) {
+            return response()->noContent();
+        }
+        return $session;
     }
 }

@@ -6,6 +6,7 @@ use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
 use App\Models\Step;
 use App\Models\User;
 use Auth;
+use Illuminate\Http\Response;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetUserCurrentStep
@@ -15,11 +16,21 @@ class GetUserCurrentStep
     public function handle(User $user): ?Step
     {
         $session = GetUserCurrentSession::run($user);
-        return $session->current_step;
+
+        if (isset($session['current_step'])) {
+            return $session['current_step'];
+        }
+        return null;
     }
 
-    public function asController(): ?Step
+    public function asController(): Step|Response
     {
-        return $this->handle(Auth::user());
+        $step = $this->handle(Auth::user());
+
+        if ($step === null) {
+            return response()->noContent();
+        }
+
+        return $step;
     }
 }
