@@ -93,6 +93,10 @@ class PomodoroSession extends Model
             return SessionStatus::IN_PROGRESS();
         }
 
+        if ($this->hasStepWithStatus(StepStatus::SKIPPED())) {
+            return SessionStatus::IN_PROGRESS();
+        }
+
         if ($this->hasPendingAndDoneSteps()) {
             return SessionStatus::IN_PROGRESS();
         }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Sessions;
 
+use App\Actions\Pomodoro\Sessions\AbortSession;
 use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
 use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
@@ -54,6 +55,7 @@ class SessionStatusTest extends TestCase
         $session = $this->createSessionWithSteps();
         StartSession::run($session);
         $session = PomodoroSession::byUser(Auth::user())->first();
+        AbortSession::run($session);
         $this->assertEquals(SessionStatus::ABORTED, $session->fresh()->status);
     }
 }

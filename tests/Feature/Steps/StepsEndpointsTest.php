@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Steps;
 
+use App\Events\UserAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\Feature\SessionsAndSteps;
 use Tests\TestCase;
 
@@ -24,6 +26,10 @@ class StepsEndpointsTest extends TestCase
         int $code = 200,
         string $errorMessage = ''
     ) {
+        Event::fake([
+            UserAction::class,
+        ]);
+
         $this->callClassFunctionByFunctionName($create);
 
         $endpoint = $this->baseEndpoint . $endpoint;
@@ -58,7 +64,7 @@ class StepsEndpointsTest extends TestCase
                 'createSessionWithSteps',
                 '/current'
             ],
-            'Start Current Step ' => [
+            'Start Current Step' => [
                 'createDoneStep',
                 '/current/action',
                 'post',
