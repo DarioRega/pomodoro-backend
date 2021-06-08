@@ -2,9 +2,7 @@
 
 namespace App\Events;
 
-use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Models\PomodoroSession;
-use App\Models\Step;
 use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -17,7 +15,6 @@ class UserAction implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public PomodoroSession $session;
-    public Step $currentStep;
     public User $user;
 
     public bool $afterCommit = true;
@@ -31,7 +28,6 @@ class UserAction implements ShouldBroadcast
     {
         $this->user = $user;
         $this->session = $session;
-        $this->currentStep = GetUserCurrentStep::run($user);
     }
 
     /**

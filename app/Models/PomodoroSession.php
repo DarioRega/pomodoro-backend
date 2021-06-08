@@ -69,7 +69,7 @@ class PomodoroSession extends Model
         'pomodoro_quantity',
     ];
 
-    protected $appends = ['status'];
+    protected $appends = ['status', 'current_step'];
 
     /**
      * Get this sessions steps.
@@ -93,7 +93,7 @@ class PomodoroSession extends Model
             return SessionStatus::IN_PROGRESS();
         }
 
-        if ($this->hasStepWithStatus(StepStatus::SKIPPED())) {
+        if ($this->hasPendingAndSkippedSteps()) {
             return SessionStatus::IN_PROGRESS();
         }
 
@@ -108,6 +108,36 @@ class PomodoroSession extends Model
         return SessionStatus::DONE();
     }
 
+    public function getCurrentStepAttribute(): ?Step
+    {
+        $steps = $this->steps;
+
+        $stepInProgress = $steps->filter(function (Step $step) {
+            return $step->status == StepStatus::IN_PROGRESS;
+        })->first();
+
+        $stepPaused = $steps->filter(function (Step $step) {
+            return $step->status == StepStatus::PAUSED;
+        })->first();
+
+        $nextPendingStep = $steps->filter(function (Step $step) {
+            return $step->status == StepStatus::PENDING;
+        })->first();
+
+        if ($stepInProgress !== null) {
+            return $stepInProgress;
+        }
+
+        if ($stepPaused !== null) {
+            return $stepPaused;
+        }
+
+        if ($nextPendingStep !== null) {
+            return $nextPendingStep;
+        }
+        return null;
+    }
+
     private function hasStepWithStatus(StepStatus $status): bool
     {
         return $this->steps->filter(function (Step $step) use ($status) {
@@ -118,6 +148,11 @@ class PomodoroSession extends Model
     private function hasPendingAndDoneSteps(): bool
     {
         return $this->hasStepWithStatus(StepStatus::PENDING()) && $this->hasStepWithStatus(StepStatus::DONE());
+    }
+
+    private function hasPendingAndSkippedSteps(): bool
+    {
+        return $this->hasStepWithStatus(StepStatus::PENDING()) && $this->hasStepWithStatus(StepStatus::SKIPPED());
     }
 
     /**
