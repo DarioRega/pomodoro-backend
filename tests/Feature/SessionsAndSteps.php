@@ -30,6 +30,17 @@ trait SessionsAndSteps
         return $session->fresh();
     }
 
+    public function createFinishedSession(): PomodoroSession
+    {
+        $session = $this->createSession();
+        CreateSessionSteps::run($session);
+        foreach ($session->fresh()->steps as $step) {
+            StartStep::run($step);
+            FinishStep::run($step);
+        }
+        return $session->fresh();
+    }
+
     public function createPendingStep(): Step
     {
         $session = $this->createSessionWithSteps();

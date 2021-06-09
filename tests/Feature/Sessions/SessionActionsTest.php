@@ -43,4 +43,10 @@ class SessionActionsTest extends TestCase
         $response->assertJson(['message' => __('You cannot have 2 session running')]);
         $response->assertStatus(400);
     }
+
+    public function testNullCurrentStep()
+    {
+        $session = $this->createFinishedSession();
+        $this->assertNull($session->current_step);
+    }
 }
