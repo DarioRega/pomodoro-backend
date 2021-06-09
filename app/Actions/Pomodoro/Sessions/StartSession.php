@@ -21,7 +21,6 @@ class StartSession
      */
     public function handle(PomodoroSession $session): PomodoroSession
     {
-        $this->validate($session);
         StartStep::run($session->steps->first());
         return PomodoroSession::whereId($session->id)->with(['steps', 'steps.actions'])->first();
     }
@@ -29,6 +28,7 @@ class StartSession
     public function asController(ActionRequest $request, PomodoroSession $session): JsonResponse|PomodoroSession
     {
         try {
+            $this->validate($session);
             return $this->handle($session);
         } catch (InvalidStepActionException $e) {
             return response()->json([

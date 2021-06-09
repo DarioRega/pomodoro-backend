@@ -4,138 +4,147 @@ namespace Tests\Feature\Steps;
 
 use App\Events\UserAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
+use Tests\Feature\SmokeTestCase;
 use Tests\Feature\SessionsAndSteps;
-use Tests\TestCase;
 
-class StepsEndpointsTest extends TestCase
+class StepsEndpointsTest extends SmokeTestCase
 {
     use SessionsAndSteps;
     use RefreshDatabase;
 
-    private string $baseEndpoint = '/api/user/sessions/current/steps';
-
-    /**
-     * @dataProvider provider
-     */
-    public function testStepEndpoint(
-        string $create,
-        string $endpoint,
-        string $method = 'get',
-        array $data = [],
-        int $code = 200,
-        string $errorMessage = ''
-    ) {
-        Event::fake([
-            UserAction::class,
-        ]);
-
-        $this->callClassFunctionByFunctionName($create);
-
-        $endpoint = $this->baseEndpoint . $endpoint;
-
-        $response = $method === 'get' ? $this->get($endpoint) : $this->post($endpoint, $data);
-        $response->assertStatus($code);
-        if ($errorMessage !== '') {
-            $response->assertJson(['message' => __($errorMessage)]);
-        }
-    }
+    protected string $baseEndpoint = '/api/user/sessions/current/steps';
+    protected array $events = [UserAction::class];
 
     public function provider(): array
     {
         return [
-            'Get current Steps' => [
-                'createInProgressStep',
-                '/'
+            'Get current steps' => [
+                ['create' => 'createInProgressStep'],
             ],
-            'Get User Current Step In Progress' => [
-                'createInProgressStep',
-                '/current'
+            'Get current empty steps' => [
+                ['create' => 'createPendingStep'],
             ],
-            'Get User Current Step Paused' => [
-                'createPausedStep',
-                '/current'
+            'Get user current step in progress' => [
+                [
+                    'create' => 'createInProgressStep',
+                    'endpoint' => '/current'
+                ],
             ],
-            'Get User Current next Pending step' => [
-                'createDoneStep',
-                '/current'
+            'Get user current step paused' => [
+                [
+                    'create' => 'createPausedStep',
+                    'endpoint' => '/current'
+                ],
             ],
-            'Get User Current no content Step' => [
-                'createSessionWithSteps',
-                '/current',
-                'get',
-                [],
-                204
+            'Get user current next pending step' => [
+                [
+                    'create' => 'createDoneStep',
+                    'endpoint' => '/current'
+                ],
             ],
-            'Start Current Step' => [
-                'createDoneStep',
-                '/current/action',
-                'post',
-                ['type' => 'START'],
+            'Get user current no content step' => [
+                [
+                    'create' => 'createSessionWithSteps',
+                    'code' => 204,
+                    'endpoint' => '/current',
+                    'method' => 'get'
+                ],
             ],
-            'Start Current Step Error' => [
-                'createInProgressStep',
-                '/current/action',
-                'post',
-                ['type' => 'START'],
-                400,
-                'Step already started'
+            'Start current step' => [
+                [
+                    'create' => 'createDoneStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'body' => ['type' => 'START'],
+                    'events' => [UserAction::class],
+                ],
             ],
-            'Finish Current Step' => [
-                'createInProgressStep',
-                '/current/action',
-                'post',
-                ['type' => 'FINISH'],
+            'Start current step error' => [
+                [
+                    'create' => 'createInProgressStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'code' => 400,
+                    'body' => ['type' => 'START'],
+                    'errorMessage' => 'Step already started',
+                ],
             ],
-            'Finish Current Step Error' => [
-                'createPausedStep',
-                '/current/action',
-                'post',
-                ['type' => 'FINISH'],
-                400,
-                'Cannot finish a paused step'
+            'Start current step error no session' => [
+                [
+                    'create' => 'createSession',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'code' => 400,
+                    'body' => ['type' => 'START'],
+                    'errorMessage' => 'No current session available',
+                ],
             ],
-            'Pause Current Step (mandatory resting_time)' => [
-                'createInProgressStep',
-                '/current/action',
-                'post',
-                ['type' => 'PAUSE'],
-                400,
-                'resting_time is mandatory',
+            'Finish current step' => [
+                [
+                    'create' => 'createInProgressStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'body' => ['type' => 'FINISH'],
+                    'events' => [UserAction::class],
+                ],
             ],
-            'Pause Current Step' => [
-                'createInProgressStep',
-                '/current/action',
-                'post',
-                ['type' => 'PAUSE', 'resting_time' => '00:01:00']
+            'Finish current step error' => [
+                [
+                    'create' => 'createPausedStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'code' => 400,
+                    'body' => ['type' => 'FINISH'],
+                    'errorMessage' => 'Cannot finish a paused step',
+                ],
             ],
-            'Resume Current Step' => [
-                'createPausedStep',
-                '/current/action',
-                'post',
-                ['type' => 'RESUME'],
-                200
+            'Pause current step (mandatory resting_time)' => [
+                [
+                    'create' => 'createInProgressStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'code' => 400,
+                    'body' => ['type' => 'PAUSE'],
+                    'errorMessage' => 'resting_time is mandatory',
+                ],
             ],
-            'Skip Current Step' => [
-                'createPausedStep',
-                '/current/action',
-                'post',
-                ['type' => 'SKIP'],
-                200
+            'Pause current step' => [
+                [
+                    'create' => 'createInProgressStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'body' => ['type' => 'PAUSE', 'resting_time' => '00:01:00'],
+                    'events' => [UserAction::class],
+                ],
+            ],
+            'Resume current step' => [
+                [
+                    'create' => 'createPausedStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'body' => ['type' => 'RESUME'],
+                    'events' => [UserAction::class],
+                ],
+            ],
+            'Skip current step' => [
+                [
+                    'create' => 'createPausedStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'body' => ['type' => 'SKIP'],
+                    'events' => [UserAction::class],
+                ],
             ],
             'Invalid step type' => [
-                'createPausedStep',
-                '/current/action',
-                'post',
-                ['type' => 'Kiwi'],
-                400,
-                'Invalid step action type: Kiwi'
+                [
+                    'create' => 'createPausedStep',
+                    'endpoint' => '/current/action',
+                    'method' => 'post',
+                    'code' => 400,
+                    'body' => ['type' => 'Kiwi'],
+                    'errorMessage' => 'Invalid step action type: Kiwi',
+                ],
             ],
         ];
-    }
-
-    private function callClassFunctionByFunctionName($create)
-    {
-        call_user_func(array($this, $create));
     }
 }
