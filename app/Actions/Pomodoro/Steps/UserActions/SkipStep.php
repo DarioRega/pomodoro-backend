@@ -27,6 +27,9 @@ class SkipStep
         LogAction::run($step, StepAction::SKIP());
         $this->unsetEndTime();
 
+        $this->step->resting_time = '00:00:00';
+        $this->step->save();
+
         $this->step->skipped_at = now();
         $this->step->save();
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Pomodoro\StepTime;
 use App\Enums\SessionStatus;
 use App\Enums\StepStatus;
 use App\Traits\Uuids;
@@ -44,9 +45,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PomodoroSession whereUserId($value)
  * @mixin Eloquent
  * @method static PomodoroSessionFactory factory(...$parameters)
- * @property string|null $end_time
  * @method static Builder|PomodoroSession byUser(User $user)
- * @method static Builder|PomodoroSession whereEndTime($value)
  * @property-read SessionStatus $status
  * @method static Builder|PomodoroSession currentByUser(User $user)
  * @property string|null $aborted_at
@@ -69,7 +68,7 @@ class PomodoroSession extends Model
         'pomodoro_quantity',
     ];
 
-    protected $appends = ['status', 'current_step'];
+    protected $appends = ['status', 'current_step', 'resting_time', 'end_time'];
 
     /**
      * Get this sessions steps.
@@ -136,6 +135,29 @@ class PomodoroSession extends Model
             return $nextPendingStep;
         }
         return null;
+    }
+
+    public function getRestingTimeAttribute(): string
+    {
+        $restingTime = now()->diffInSeconds($this->calculateEndTime());
+        return gmdate('H:i:s', $restingTime);
+    }
+
+    public function getEndTimeAttribute(): string
+    {
+       return $this->calculateEndTime();
+    }
+
+    private function calculateEndTime(): string
+    {
+        $sessionEndTime = now();
+        foreach ($this->steps as $step) {
+            $stepRestingTime = Carbon::createFromFormat('H:i:s', $step->resting_time);
+            $sessionEndTime->addHours($stepRestingTime->hour)
+                ->addMinutes($stepRestingTime->minute)
+                ->addSeconds($stepRestingTime->second);
+        }
+        return $sessionEndTime;
     }
 
     private function hasStepWithStatus(StepStatus $status): bool
