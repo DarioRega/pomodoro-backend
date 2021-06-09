@@ -19,7 +19,10 @@
         <exclude>
             <directory suffix=".php">./app/Actions/Fortify</directory>
             <directory suffix=".php">./app/Actions/Jetstream</directory>
-            <directory suffix=".php">./app/Http/Middleware</directory>
+            <directory suffix=".php">./app/Actions/Jetstream</directory>
+            <directory suffix=".php">./app/Providers</directory>
+            <directory suffix=".php">./app/Events</directory>
+            <directory suffix=".php">./app/Http</directory>
             <file>app/Providers/FortifyServiceProvider.php</file>
             <file>app/Console/Kernel.php</file>
         </exclude>
