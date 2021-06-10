@@ -39,6 +39,7 @@ class SessionEndpointsTest extends SmokeTestCase
                 [
                     'create' => 'createInProgressStep',
                     'endpoint' => '/current/abort',
+                    'events' => [UpdateSessionEvent::class],
                     'code' => 200
                 ],
             ],

@@ -8,6 +8,7 @@ use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentSessionSteps;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Actions\Pomodoro\Steps\UserActions\RunActionIntoCurrentStep;
+use App\Actions\Pomodoro\Tasks\CreateTask;
 use App\Actions\Pomodoro\Tasks\Getters\GetTaskStatuses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,10 @@ Route::group([
                 });
             });
         });
+    });
+
+    Route::group(['prefix' => 'tasks'], function () {
+        Route::post('/', CreateTask::class);
     });
 });
 

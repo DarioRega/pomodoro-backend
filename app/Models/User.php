@@ -121,6 +121,14 @@ class User extends Authenticatable
         return $this->hasMany(PomodoroSession::class);
     }
 
+    /**
+     * Get the sessions for this user.
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
    /**
    * Get the global settings for this user.
    */
