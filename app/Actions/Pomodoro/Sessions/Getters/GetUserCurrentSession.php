@@ -27,9 +27,9 @@ class GetUserCurrentSession
 
         if ($session !== null) {
             $this->checkIfStepIsFinish($session->current_step);
+            return $session->fresh();
         }
-
-        return $session->fresh();
+        return null;
     }
 
     private function checkIfStepIsFinish(Step $currentStep)
