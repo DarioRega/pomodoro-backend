@@ -3,9 +3,11 @@
 namespace App\Actions\Pomodoro\Sessions;
 
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
+use App\Events\UpdateSessionEvent;
 use App\Exceptions\InvalidStepActionException;
 use App\Models\PomodoroSession;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -13,9 +15,6 @@ class AbortSession
 {
     use AsAction;
 
-    /**
-     * @throws InvalidStepActionException
-     */
     public function handle(PomodoroSession $session): PomodoroSession
     {
         $session->aborted_at = now();
@@ -34,6 +33,9 @@ class AbortSession
             ], '404');
         }
 
-        return $this->handle($currentSession);
+        $currentSession = $this->handle($currentSession);
+
+        broadcast(new UpdateSessionEvent(Auth::user(), $currentSession));
+        return $currentSession;
     }
 }

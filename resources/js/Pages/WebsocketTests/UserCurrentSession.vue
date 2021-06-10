@@ -14,9 +14,9 @@ export default {
         this.payload = 'empty'
         Echo.private(`user.${this.$inertia.page.props.user.id}`).listen(
             `.current.session`,
-            (e) => {
-                this.payload = e.session.status
-                console.log(e)
+            (session) => {
+                this.payload = session.status
+                console.log(session.status)
             }
         )
     },

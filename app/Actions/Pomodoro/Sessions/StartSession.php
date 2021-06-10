@@ -4,6 +4,7 @@ namespace App\Actions\Pomodoro\Sessions;
 
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
+use App\Events\UpdateSessionEvent;
 use App\Exceptions\InvalidStepActionException;
 use App\Models\PomodoroSession;
 use Illuminate\Http\JsonResponse;
@@ -16,9 +17,6 @@ class StartSession
 {
     use AsAction;
 
-    /**
-     * @throws InvalidStepActionException
-     */
     public function handle(PomodoroSession $session): PomodoroSession
     {
         StartStep::run($session->steps->first());
@@ -29,7 +27,10 @@ class StartSession
     {
         try {
             $this->validate($session);
-            return $this->handle($session);
+            $session = $this->handle($session);
+
+            broadcast(new UpdateSessionEvent(Auth::user(), $session));
+            return $session;
         } catch (InvalidStepActionException $e) {
             return response()->json([
                 'message' => $e->getMessage(),

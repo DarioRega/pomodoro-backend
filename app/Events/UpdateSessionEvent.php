@@ -30,6 +30,11 @@ class UpdateSessionEvent implements ShouldBroadcast
         $this->session = $session;
     }
 
+    public function broadcastWith(): array
+    {
+        return $this->session->toArray();
+    }
+
     /**
      * The event's broadcast name.
      *
