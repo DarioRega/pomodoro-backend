@@ -3,7 +3,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Actions\Pomodoro\Sessions\CreateDefaultSession;
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
 use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
@@ -13,12 +12,13 @@ use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Models\PomodoroSession;
 use App\Models\Step;
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 trait SessionsAndSteps
 {
     public function createSession(array $data = []): PomodoroSession
     {
-        $this->actingAs($user =User::factory()->create());
+        Sanctum::actingAs($user = User::factory()->create());
         CreateDefaultSession::run($data);
         return $user->fresh()->pomodoroSessions->first();
     }
@@ -27,6 +27,17 @@ trait SessionsAndSteps
     {
         $session = $this->createSession();
         CreateSessionSteps::run($session);
+        return $session->fresh();
+    }
+
+    public function createFinishedSession(): PomodoroSession
+    {
+        $session = $this->createSession();
+        CreateSessionSteps::run($session);
+        foreach ($session->fresh()->steps as $step) {
+            StartStep::run($step);
+            FinishStep::run($step);
+        }
         return $session->fresh();
     }
 

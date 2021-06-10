@@ -29,9 +29,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/websocket-test', function () {
-    return Inertia::render('WebsocketTest');
-})->name('websocket.test');
+Route::middleware(['auth:sanctum', 'verified'])->get('/userCurrentSession', function () {
+    return Inertia::render('WebsocketTests/UserCurrentSession', [
+            'user' => Auth::user(),
+        ]);
+})->name('user.current.session');
 
 Route::get('/broadcast', function () {
     broadcast(new Test());

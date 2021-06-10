@@ -42,6 +42,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Step whereType($value)
  * @method static Builder|Step whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string|null $end_time
+ * @property-read StepStatus $status
+ * @property-read \App\Models\PomodoroSession $pomodoroSession
+ * @method static Builder|Step whereEndTime($value)
  */
 class Step extends Model
 {
@@ -51,6 +55,8 @@ class Step extends Model
         'duration',
         'resting_time',
     ];
+
+    protected $appends = ['status'];
 
     /**
      * Get the user's full name.

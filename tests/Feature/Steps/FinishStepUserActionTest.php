@@ -76,14 +76,4 @@ class FinishStepUserActionTest extends TestCase
 
         FinishStep::run($step);
     }
-
-    public function testCannotFinishStepWithRemainingRestingTime()
-    {
-        $step = $this->createInProgressStep();
-
-        $this->expectException(InvalidStepActionException::class);
-        $this->expectExceptionMessage(__('Resting time must be 00:00:00 to finish a step'));
-
-        FinishStep::run($step);
-    }
 }
