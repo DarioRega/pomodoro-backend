@@ -4,7 +4,9 @@ namespace Tests\Feature\Sessions;
 
 use App\Actions\Pomodoro\Sessions\CreateDefaultSession;
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
+use App\Events\UpdateSessionEvent;
 use App\Models\User;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\Feature\SessionsAndSteps;
@@ -17,6 +19,7 @@ class SessionActionsTest extends TestCase
 
     public function testStartSession()
     {
+        Event::fake(UpdateSessionEvent::class);
         $session = $this->createSessionWithSteps();
 
         $response = $this->getJson('/api/user/sessions/' . $session->id . '/start');
