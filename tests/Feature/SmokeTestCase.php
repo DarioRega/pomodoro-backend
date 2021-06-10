@@ -21,6 +21,7 @@ class SmokeTestCase extends TestCase
         'create' => null,
         'body' => [],
         'events' => [],
+        'jsonCount' => null,
     ];
 
     /**
@@ -33,13 +34,15 @@ class SmokeTestCase extends TestCase
         Event::fake($this->events);
         $this->assertEvents($parameters);
 
-        $this->callClassFunctionByFunctionName($parameters['create']);
+        $this->callClassFunctionByFunctionName($parameters);
 
         $endpoint = $this->baseEndpoint . $parameters['endpoint'];
 
         $response = $this->callEndpoint($parameters['method'], $endpoint, $parameters['body']);
 
         $response->assertStatus($parameters['code']);
+
+        $this->countJsonResponseObjects($response, $parameters);
 
         $this->assertErrorMessage($response, $parameters['errorMessage']);
     }
@@ -77,9 +80,18 @@ class SmokeTestCase extends TestCase
         throw new Exception('Method: '. $method . ' is not supported yet');
     }
 
-    private function callClassFunctionByFunctionName($create)
+    private function callClassFunctionByFunctionName($parameters)
     {
-        call_user_func(array($this, $create));
+        if (isset($parameters['create'])) {
+            call_user_func(array($this, $parameters['create']));
+        }
+    }
+
+    private function countJsonResponseObjects($response, $parameters)
+    {
+        if ($parameters['jsonCount'] !== null) {
+            $response->assertJsonCount($parameters['jsonCount']);
+        }
     }
 
     public function provider(): array
