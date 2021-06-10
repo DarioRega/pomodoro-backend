@@ -28,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|TaskStatus whereName($value)
  * @method static Builder|TaskStatus whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \App\Models\User $user
  */
 class TaskStatus extends Model
 {

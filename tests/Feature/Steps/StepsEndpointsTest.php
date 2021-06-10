@@ -47,7 +47,6 @@ class StepsEndpointsTest extends SmokeTestCase
                     'create' => 'createSessionWithSteps',
                     'code' => 204,
                     'endpoint' => '/current',
-                    'method' => 'get'
                 ],
             ],
             'Start current step' => [

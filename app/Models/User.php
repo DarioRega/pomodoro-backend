@@ -62,6 +62,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User whereUserSettingId($value)
  * @mixin Eloquent
+ * @property-read Collection|\App\Models\Task[] $tasks
+ * @property-read int|null $tasks_count
  */
 class User extends Authenticatable
 {
