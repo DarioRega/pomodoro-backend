@@ -4,7 +4,7 @@ namespace App\Actions\Pomodoro\Steps\UserActions;
 
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Enums\StepAction;
-use App\Events\UserAction;
+use App\Events\UpdateSessionEvent;
 use App\Exceptions\InvalidStepActionException;
 use App\Models\Step;
 use App\Models\User;
@@ -68,7 +68,7 @@ class RunActionIntoCurrentStep
     {
         try {
             $step = $this->handle(Auth::user(), $request->validated());
-            broadcast(new UserAction(Auth::user(), $step->pomodoroSession));
+            broadcast(new UpdateSessionEvent(Auth::user(), $step->pomodoroSession));
             return $step;
         } catch (InvalidStepActionException $e) {
             return response()->json([

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Steps;
 
-use App\Events\UserAction;
+use App\Events\UpdateSessionEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\SmokeTestCase;
 use Tests\Feature\SessionsAndSteps;
@@ -13,7 +13,7 @@ class StepsEndpointsTest extends SmokeTestCase
     use RefreshDatabase;
 
     protected string $baseEndpoint = '/api/user/sessions/current/steps';
-    protected array $events = [UserAction::class];
+    protected array $events = [UpdateSessionEvent::class];
 
     public function provider(): array
     {
@@ -56,7 +56,7 @@ class StepsEndpointsTest extends SmokeTestCase
                     'endpoint' => '/current/action',
                     'method' => 'post',
                     'body' => ['type' => 'START'],
-                    'events' => [UserAction::class],
+                    'events' => [UpdateSessionEvent::class],
                 ],
             ],
             'Start current step error' => [
@@ -85,7 +85,7 @@ class StepsEndpointsTest extends SmokeTestCase
                     'endpoint' => '/current/action',
                     'method' => 'post',
                     'body' => ['type' => 'FINISH'],
-                    'events' => [UserAction::class],
+                    'events' => [UpdateSessionEvent::class],
                 ],
             ],
             'Finish current step error' => [
@@ -114,7 +114,7 @@ class StepsEndpointsTest extends SmokeTestCase
                     'endpoint' => '/current/action',
                     'method' => 'post',
                     'body' => ['type' => 'PAUSE', 'resting_time' => '00:01:00'],
-                    'events' => [UserAction::class],
+                    'events' => [UpdateSessionEvent::class],
                 ],
             ],
             'Resume current step' => [
@@ -123,7 +123,7 @@ class StepsEndpointsTest extends SmokeTestCase
                     'endpoint' => '/current/action',
                     'method' => 'post',
                     'body' => ['type' => 'RESUME'],
-                    'events' => [UserAction::class],
+                    'events' => [UpdateSessionEvent::class],
                 ],
             ],
             'Skip current step' => [
@@ -132,7 +132,7 @@ class StepsEndpointsTest extends SmokeTestCase
                     'endpoint' => '/current/action',
                     'method' => 'post',
                     'body' => ['type' => 'SKIP'],
-                    'events' => [UserAction::class],
+                    'events' => [UpdateSessionEvent::class],
                 ],
             ],
             'Invalid step type' => [

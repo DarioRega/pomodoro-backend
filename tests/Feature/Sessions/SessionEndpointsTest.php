@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Sessions;
 
-use App\Events\UserAction;
+use App\Events\UpdateSessionEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\SessionsAndSteps;
 use Tests\Feature\SmokeTestCase;
@@ -13,7 +13,7 @@ class SessionEndpointsTest extends SmokeTestCase
     use RefreshDatabase;
 
     protected string $baseEndpoint = '/api/user/sessions';
-    protected array $events = [UserAction::class];
+    protected array $events = [UpdateSessionEvent::class];
 
 
     public function provider(): array
