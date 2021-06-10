@@ -6,7 +6,7 @@ use App\Models\TaskStatus;
 use Illuminate\Database\Eloquent\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetTasks
+class GetTaskStatuses
 {
     use AsAction;
 
