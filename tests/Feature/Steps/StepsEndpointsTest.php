@@ -4,12 +4,12 @@ namespace Tests\Feature\Steps;
 
 use App\Events\UpdateSessionEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\Feature\SmokeTestCase;
-use Tests\Feature\SessionsAndSteps;
 
 class StepsEndpointsTest extends SmokeTestCase
 {
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
     use RefreshDatabase;
 
     protected string $baseEndpoint = '/api/user/sessions/current/steps';

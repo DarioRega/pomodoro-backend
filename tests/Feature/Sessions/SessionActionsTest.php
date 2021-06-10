@@ -9,13 +9,13 @@ use App\Models\User;
 use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 
 class SessionActionsTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
 
     public function testStartSession()
     {

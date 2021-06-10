@@ -3,13 +3,15 @@
 namespace Tests\Feature\Tasks;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Creators\TasksCreators;
+use Tests\Feature\Creators\UserCreators;
 use Tests\Feature\SmokeTestCase;
-use Tests\Feature\UserHelpers;
 
 class TaskEndpointsTest extends SmokeTestCase
 {
-    use UserHelpers;
+    use UserCreators;
     use RefreshDatabase;
+    use TasksCreators;
 
     public function provider(): array
     {
@@ -54,6 +56,53 @@ class TaskEndpointsTest extends SmokeTestCase
                         ]
                     ],
                     'code' => 201
+                ],
+            ],
+            'Delete task' => [
+                [
+                    'create' => 'createTask',
+                    'endpoint' => '/api/user/tasks/{id}',
+                    'method' => 'delete',
+                    'code' => 200
+                ],
+            ],
+            'Cannot delete another user task' => [
+                [
+                    'create' => 'createOtherUserTask',
+                    'endpoint' => '/api/user/tasks/{id}',
+                    'method' => 'delete',
+                    'code' => 403,
+                    'errorMessage' => 'You are not allowed to update this task',
+                ],
+            ],
+            'Update task' => [
+                [
+                    'create' => 'createTask',
+                    'endpoint' => '/api/user/tasks/{id}/update',
+                    'method' => 'post',
+                    'code' => 200,
+                    'body' => [
+                        'name' => 'Picaro Picaro',
+                        'description' => 'puma puma',
+                        'deadline' => '2024-10-10',
+                    ],
+                    'assertJson' => [
+                        'name' => 'Picaro Picaro',
+                        'description' => 'puma puma',
+                        'deadline' => '2024-10-10',
+                    ],
+                ],
+            ],
+            'Cannot update another user task' => [
+                [
+                    'create' => 'createOtherUserTask',
+                    'endpoint' => '/api/user/tasks/{id}/update',
+                    'method' => 'post',
+                    'code' => 403,
+                    'body' => [
+                        'name' => 'Picaro Picaro',
+                    ],
+                    'errorMessage' => 'You are not allowed to update this task',
                 ],
             ],
         ];
