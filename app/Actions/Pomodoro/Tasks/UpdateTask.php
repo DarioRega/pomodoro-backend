@@ -2,6 +2,7 @@
 
 namespace App\Actions\Pomodoro\Tasks;
 
+use App\Events\Tasks\TaskEvent;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,9 @@ class UpdateTask
     {
         try {
             $this->validate($task);
-            return $this->handle($task, $request->validated());
+            $task = $this->handle($task, $request->validated());
+            broadcast(new TaskEvent($request->user(), $task, 'update'));
+            return $task;
         } catch (UnauthorizedException $e) {
             return response()->json([
                 'message' => $e->getMessage(),

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Pomodoro\Tasks;
 
+use App\Events\Tasks\TaskEvent;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,7 @@ class DeleteTask
     {
         try {
             $this->validate($task);
+            broadcast(new TaskEvent($request->user(), $task, 'delete'));
             return $this->handle($task);
         } catch (UnauthorizedException $e) {
             return response()->json([

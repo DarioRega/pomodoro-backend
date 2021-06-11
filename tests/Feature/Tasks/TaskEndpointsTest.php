@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Tasks;
 
+use App\Events\Tasks\TaskEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\Creators\TasksCreators;
 use Tests\Feature\Creators\UserCreators;
@@ -12,6 +13,8 @@ class TaskEndpointsTest extends SmokeTestCase
     use UserCreators;
     use RefreshDatabase;
     use TasksCreators;
+
+    protected array $events = [TaskEvent::class];
 
     public function provider(): array
     {
@@ -27,6 +30,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'create' => 'createUser',
                     'endpoint' => '/api/user/tasks',
                     'method' => 'post',
+                    'events' => [TaskEvent::class],
                     'body' => ['name' => 'test name'],
                     'assertJson' => [
                         'name' => 'test name',
@@ -42,6 +46,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'create' => 'createUser',
                     'endpoint' => '/api/user/tasks',
                     'method' => 'post',
+                    'events' => [TaskEvent::class],
                     'body' => [
                         'name' => 'test name',
                         'description' => 'test description',
@@ -63,6 +68,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'create' => 'createTask',
                     'endpoint' => '/api/user/tasks/{id}',
                     'method' => 'delete',
+                    'events' => [TaskEvent::class],
                     'code' => 200
                 ],
             ],
@@ -81,6 +87,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'endpoint' => '/api/user/tasks/{id}/update',
                     'method' => 'post',
                     'code' => 200,
+                    'events' => [TaskEvent::class],
                     'body' => [
                         'name' => 'Picaro Picaro',
                         'description' => 'puma puma',
