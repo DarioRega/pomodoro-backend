@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Actions\Pomodoro\StepTime;
 use App\Enums\SessionStatus;
 use App\Enums\StepStatus;
 use App\Traits\Uuids;
@@ -50,6 +49,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PomodoroSession currentByUser(User $user)
  * @property string|null $aborted_at
  * @method static Builder|PomodoroSession whereAbortedAt($value)
+ * @property-read \App\Models\Step|null $current_step
+ * @property-read string $end_time
+ * @property-read string $resting_time
  */
 class PomodoroSession extends Model
 {

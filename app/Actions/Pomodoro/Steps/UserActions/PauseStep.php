@@ -20,12 +20,17 @@ class PauseStep
     /**
      * @throws InvalidStepActionException
      */
-    public function handle(Step $step, string $resting_time): Step
+    public function handle(Step $step, string $resting_time = null): Step
     {
         $this->step = $step->fresh();
         $this->validate();
 
-        $this->step->resting_time = $resting_time;
+        if ($resting_time === null) {
+            $this->step->resting_time = $this->calculateRestingTime($this->step);
+        } else {
+            $this->step->resting_time = $resting_time;
+        }
+
         $this->step->save();
 
         LogAction::run($step, StepAction::PAUSE());

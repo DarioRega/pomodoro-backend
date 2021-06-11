@@ -21,11 +21,6 @@ services:
             - mysql
 #            - redis
 #            - selenium
-    laravel.pusher:
-      <<: *laravelBase
-      ports:
-        - '${PUSHER_APP_PORT:-6001}:6001'
-      command: php artisan websockets:serve
     laravel.hotReload:
       <<: *laravelBase
       ports:
