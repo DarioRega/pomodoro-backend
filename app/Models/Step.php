@@ -58,6 +58,10 @@ class Step extends Model
 
     protected $appends = ['status'];
 
+    protected $hidden = [
+        'actions'
+    ];
+
     /**
      * Get the user's full name.
      *

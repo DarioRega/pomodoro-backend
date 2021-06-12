@@ -38,3 +38,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/userCurrentSession', func
 Route::get('/broadcast', function () {
     broadcast(new Test());
 });
+
+Route::webhooks('webhook/existence');

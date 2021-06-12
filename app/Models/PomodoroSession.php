@@ -147,7 +147,7 @@ class PomodoroSession extends Model
 
     public function getEndTimeAttribute(): string
     {
-       return $this->calculateEndTime();
+        return $this->calculateEndTime();
     }
 
     private function calculateEndTime(): string

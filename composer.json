@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.0",
         "bensampo/laravel-enum": "^3.3",
-        "beyondcode/laravel-websockets": "^1.12",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -17,6 +16,8 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "lorisleiva/laravel-actions": "^2.1",
+        "pusher/pusher-php-server": "^7.0",
+        "spatie/laravel-webhook-client": "^2.7",
         "squizlabs/php_codesniffer": "*",
         "tightenco/ziggy": "^1.0"
     },
@@ -52,12 +53,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:models",
-            "@php artisan ide-helper:meta"
         ],
         "ide:generate": [
             "@php artisan ide-helper:generate",

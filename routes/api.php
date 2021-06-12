@@ -13,6 +13,7 @@ use App\Actions\Pomodoro\Tasks\DeleteTask;
 use App\Actions\Pomodoro\Tasks\Getters\GetTaskStatuses;
 use App\Actions\Pomodoro\Tasks\UpdateTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::group([
     'prefix' => 'user',

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Pomodoro;
 
+use App\Models\Step;
 use Illuminate\Support\Carbon;
 
 trait StepTime
@@ -30,5 +31,15 @@ trait StepTime
     public function createFromDateTime(string $datetime): bool|\Carbon\Carbon
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $datetime);
+    }
+
+    public function calculateRestingTime(Step $step)
+    {
+        $oldRestingTime = $this->createFromTime($step->resting_time);
+        $lastActionTime = $step->actions()->latest()->first()->created_at;
+        $timePassed = now()->diffInSeconds($lastActionTime);
+        $restingTime = $oldRestingTime->subSeconds($timePassed - 4);
+
+        return $restingTime->format('H:i:s');
     }
 }
