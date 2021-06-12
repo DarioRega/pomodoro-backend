@@ -32,7 +32,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Task whereUpdatedAt($value)
  * @mixin Eloquent
  * @property string $user_id
- * @property-read \App\Models\TaskStatus $taskStatus
+ * @method static Builder|Task byUser(User $user)
+ * @property-read TaskStatus $taskStatus
  * @method static Builder|Task whereUserId($value)
  */
 class Task extends Model
@@ -49,5 +50,20 @@ class Task extends Model
     public function taskStatus(): BelongsTo
     {
         return $this->belongsTo(TaskStatus::class);
+    }
+
+    /**
+     * Get the user tasks.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeByUser($query, User $user)
+    {
+        return $query
+            ->whereUserId($user->id)
+            ->with(['task_statuses']);
     }
 }
