@@ -64,6 +64,6 @@ class Task extends Model
     {
         return $query
             ->whereUserId($user->id)
-            ->with(['task_statuses']);
+            ->with(['taskStatus']);
     }
 }
