@@ -17,7 +17,7 @@ class UpdateTask
     public function handle(Task $task, array $values): Task
     {
         $task->update($values);
-        return Task::find($task->id);
+        return Task::with('taskStatus')->get()->find($task->id);
     }
 
 
