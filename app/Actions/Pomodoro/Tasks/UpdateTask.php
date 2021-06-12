@@ -26,7 +26,7 @@ class UpdateTask
         return [
             'name' => ['nullable'],
             'description' => ['nullable'],
-            'deadline' => ['nullable', 'date', 'after:today'],
+            'deadline' => ['nullable', 'date', 'after:yesterday'],
             'task_status_id' => ['nullable', 'exists:task_statuses,id'],
         ];
     }
