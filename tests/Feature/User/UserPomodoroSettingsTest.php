@@ -58,6 +58,14 @@ class UserPomodoroSettingsTest extends SmokeTestCase
                     ]
                 ],
             ],
+            'Delete pomodoro settings' => [
+                [
+                    'create' => 'createUserPomodoroSettings',
+                    'endpoint' => '/pomodoro-settings/{id}',
+                    'method' => 'delete',
+                    'code' => 200,
+                ],
+            ],
             'Update other user pomodoro settings error' => [
                 [
                     'create' => 'createOtherUserPomodoroSettings',
@@ -68,6 +76,15 @@ class UserPomodoroSettingsTest extends SmokeTestCase
                     'body' => [
                         'small_break_duration' => '2',
                     ],
+                ],
+            ],
+            'Delete other user pomodoro settings error' => [
+                [
+                    'create' => 'createOtherUserPomodoroSettings',
+                    'endpoint' => '/pomodoro-settings/{id}',
+                    'method' => 'delete',
+                    'code' => 403,
+                    'errorMessage' => 'You are not allowed to delete this settings',
                 ],
             ],
         ];
