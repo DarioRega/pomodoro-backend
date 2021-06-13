@@ -85,7 +85,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'endpoint' => '/api/user/tasks/{id}',
                     'method' => 'delete',
                     'code' => 403,
-                    'errorMessage' => 'You are not allowed to update this task',
+                    'errorMessage' => 'You are not allowed to delete this task',
                 ],
             ],
             'Update task' => [
