@@ -4,6 +4,7 @@ namespace App\Actions\Pomodoro\Tasks\Getters;
 
 use App\Models\Task;
 use App\Models\User;
+use Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -18,6 +19,6 @@ class GetTasks
 
     public function asController(): Collection|array
     {
-        return $this->handle(\Auth::user());
+        return $this->handle(Auth::user());
     }
 }
