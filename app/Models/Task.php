@@ -35,6 +35,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Task byUser(User $user)
  * @property-read TaskStatus $taskStatus
  * @method static Builder|Task whereUserId($value)
+ * @property-read \App\Models\User $user
  */
 class Task extends Model
 {

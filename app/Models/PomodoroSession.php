@@ -52,6 +52,7 @@ use Illuminate\Support\Carbon;
  * @property-read Step|null $current_step
  * @property-read string $end_time
  * @property-read string $resting_time
+ * @method static Builder|PomodoroSession whereEndTime($value)
  */
 class PomodoroSession extends Model
 {
