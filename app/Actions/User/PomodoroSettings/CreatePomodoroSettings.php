@@ -10,6 +10,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class CreatePomodoroSettings
 {
     use AsAction;
+    use PomodoroSettingHelpers;
 
     public function handle(User $user, array $values): Model
     {

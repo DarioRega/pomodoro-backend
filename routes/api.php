@@ -15,6 +15,7 @@ use App\Actions\Pomodoro\Tasks\Getters\GetTaskStatuses;
 use App\Actions\Pomodoro\Tasks\UpdateTask;
 use App\Actions\User\GetUser;
 use App\Actions\User\PomodoroSettings\CreatePomodoroSettings;
+use App\Actions\User\PomodoroSettings\UpdatePomodoroSettings;
 use App\Actions\User\Settings\UpdateUserSettings;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::group([
 
     Route::group(['prefix' => 'pomodoro-settings'], function () {
         Route::post('/', CreatePomodoroSettings::class);
+        Route::post('/{pomodoroSessionSettings}/update', UpdatePomodoroSettings::class);
     });
 
     Route::group(['prefix' => 'sessions'], function () {
