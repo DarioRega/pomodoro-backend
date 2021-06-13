@@ -4,7 +4,6 @@
 namespace Tests\Feature\Creators;
 
 use App\Actions\Pomodoro\Tasks\CreateTask;
-use Illuminate\Support\Collection;
 
 trait TasksCreators
 {
@@ -16,15 +15,12 @@ trait TasksCreators
         return CreateTask::run($user, ['name' => 'Test tasks']);
     }
 
-    public function createManyTasks(): Collection
+    public function createManyTasks()
     {
         $user = $this->createUser();
-        $tasksCollection = collect();
-            for($x = 1; $x < 4, $x++;) {
-                $task = CreateTask::run($user, ['name' => 'Test tasks n°'.$x]);
-                $tasksCollection->add($task);
-            }
-        return $tasksCollection;
+        for($x = 0; $x < 4; ++$x) {
+            CreateTask::run($user, ['name' => 'Test tasks n°'.$x]);
+        }
     }
 
     public function createOtherUserTask()

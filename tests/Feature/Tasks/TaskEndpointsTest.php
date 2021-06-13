@@ -26,7 +26,7 @@ class TaskEndpointsTest extends SmokeTestCase
                     'jsonCount' => 4,
                 ],
             ],
-            'Get current steps' => [
+            'Get task statuses' => [
                 [
                     'endpoint' => '/api/tasks/status',
                     'jsonCount' => 4,
