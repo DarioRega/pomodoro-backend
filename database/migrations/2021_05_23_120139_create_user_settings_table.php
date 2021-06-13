@@ -17,6 +17,7 @@ class CreateUserSettingsTable extends Migration
             $table->timestamps();
 
             $table->foreignUuid('user_id');
+            $table->foreignUuid('pomodoro_session_setting_id')->nullable();
         });
     }
 

@@ -20,7 +20,10 @@ class CreatePomodoroSettings
             'big_break_duration' => $this->getTimeFormattedFromMinutes($values['big_break_duration']),
         ]);
 
-        return $user->pomodoroSessionSettings()->create($values);
+        $pomodoroSettings = $user->pomodoroSessionSettings()->create($values);
+        $user->userSettings->pomodoro_session_setting_id = $pomodoroSettings['id'];
+        $user->userSettings->save();
+        return $pomodoroSettings;
     }
 
     public function getTimeFormattedFromMinutes($minutes): string
