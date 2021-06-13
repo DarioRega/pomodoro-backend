@@ -6,14 +6,14 @@ use App\Actions\Pomodoro\Steps\UserActions\ResumeStep;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ResumeStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
 
     public function testResumeStep()
     {

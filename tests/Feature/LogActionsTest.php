@@ -4,13 +4,14 @@ namespace Tests\Feature;
 
 use App\Actions\Pomodoro\Steps\LogAction;
 use App\Enums\StepAction;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LogActionsTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
 
     /**
      * @dataProvider provider

@@ -8,14 +8,14 @@ use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 
 class FinishStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
     use StepTime;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
 
     public function testFinishStep()
     {

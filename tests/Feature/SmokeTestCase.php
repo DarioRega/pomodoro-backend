@@ -6,7 +6,6 @@ namespace Tests\Feature;
 use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Testing\TestResponse;
-use Notification;
 use Tests\TestCase;
 
 class SmokeTestCase extends TestCase
@@ -18,9 +17,11 @@ class SmokeTestCase extends TestCase
         'code' => 200,
         'method' => 'get',
         'errorMessage' => '',
+        'assertJson' => [],
         'create' => null,
         'body' => [],
         'events' => [],
+        'jsonCount' => null,
     ];
 
     /**
@@ -30,16 +31,19 @@ class SmokeTestCase extends TestCase
     {
         $parameters = array_merge($this->baseParameters, $parameters);
 
-        Event::fake($this->events);
         $this->assertEvents($parameters);
 
-        $this->callClassFunctionByFunctionName($parameters['create']);
+        $model = $this->callClassFunctionByFunctionName($parameters);
 
-        $endpoint = $this->baseEndpoint . $parameters['endpoint'];
+        $endpoint = $this->baseEndpoint . $this->replaceModelCreatedIdIntoEndpoint($parameters, $model);
 
         $response = $this->callEndpoint($parameters['method'], $endpoint, $parameters['body']);
 
+        $this->assertJsonResponse($response, $parameters);
+
         $response->assertStatus($parameters['code']);
+
+        $this->countJsonResponseObjects($response, $parameters);
 
         $this->assertErrorMessage($response, $parameters['errorMessage']);
     }
@@ -51,9 +55,18 @@ class SmokeTestCase extends TestCase
         }
     }
 
+    private function replaceModelCreatedIdIntoEndpoint($parameters, $model): string
+    {
+        if (isset($model['id'])) {
+            return str_replace('{id}', $model['id'], $parameters['endpoint']);
+        }
+        return $parameters['endpoint'];
+    }
+
     private function assertEvents(array $parameters)
     {
         if (!empty($parameters['events'])) {
+            Event::fake($this->events);
             $this->expectsEvents($this->events);
             foreach ($parameters['events'] as $event) {
                 Event::assertDispatched($event);
@@ -70,6 +83,10 @@ class SmokeTestCase extends TestCase
             return $this->get($endpoint);
         }
 
+        if ($method === 'delete') {
+            return $this->delete($endpoint);
+        }
+
         if ($method === 'post') {
             return $this->post($endpoint, $body);
         }
@@ -77,9 +94,24 @@ class SmokeTestCase extends TestCase
         throw new Exception('Method: '. $method . ' is not supported yet');
     }
 
-    private function callClassFunctionByFunctionName($create)
+    private function callClassFunctionByFunctionName($parameters)
     {
-        call_user_func(array($this, $create));
+        if (isset($parameters['create'])) {
+            return call_user_func(array($this, $parameters['create']));
+        }
+    }
+    private function assertJsonResponse($response, $parameters)
+    {
+        if (!empty($parameters['assertJson'])) {
+            $response->assertJson($parameters['assertJson']);
+        }
+    }
+
+    private function countJsonResponseObjects($response, $parameters)
+    {
+        if ($parameters['jsonCount'] !== null) {
+            $response->assertJsonCount($parameters['jsonCount']);
+        }
     }
 
     public function provider(): array

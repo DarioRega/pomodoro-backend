@@ -7,14 +7,14 @@ use App\Actions\Pomodoro\Steps\UserActions\PauseStep;
 use App\Enums\StepAction;
 use App\Enums\StepStatus;
 use App\Exceptions\InvalidStepActionException;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PauseStepUserActionTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
     use StepTime;
 
     public function testPauseStep()

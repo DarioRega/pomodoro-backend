@@ -5,19 +5,23 @@ namespace Tests\Feature\Sessions;
 use App\Actions\Pomodoro\Sessions\AbortSession;
 use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Sessions\Getters\GetUserCurrentSession;
+use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
 use App\Enums\SessionStatus;
+use App\Enums\StepStatus;
 use App\Models\PomodoroSession;
+use App\Models\Step;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 
 class SessionStatusTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
 
     public function testSessionPending()
     {
@@ -57,5 +61,18 @@ class SessionStatusTest extends TestCase
         $session = PomodoroSession::byUser(Auth::user())->first();
         AbortSession::run($session);
         $this->assertEquals(SessionStatus::ABORTED, $session->fresh()->status);
+    }
+
+
+    public function testSessionMoveToFinishWhenTimeIsPast()
+    {
+        $session = $this->createSessionWithSteps();
+        StartSession::run($session);
+        $step = $session->steps->first();
+        $step->end_time = Carbon::yesterday();
+        $step->save();
+
+        $currentStep = GetUserCurrentStep::run(Auth::user());
+        $this->assertEquals($currentStep->status, StepStatus::PENDING());
     }
 }
