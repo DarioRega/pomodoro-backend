@@ -3,13 +3,13 @@
 namespace Tests\Feature\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\Feature\Creators\UserCreators;
 use Tests\Feature\SmokeTestCase;
-use Tests\Feature\SessionsAndSteps;
 
 class UserEndpointsTest extends SmokeTestCase
 {
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
     use RefreshDatabase;
     use UserCreators;
 
