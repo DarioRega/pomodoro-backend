@@ -8,10 +8,14 @@ use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentSessionSteps;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Actions\Pomodoro\Steps\UserActions\RunActionIntoCurrentStep;
+use App\Actions\Pomodoro\Tasks\CreateTask;
+use App\Actions\Pomodoro\Tasks\DeleteTask;
+use App\Actions\Pomodoro\Tasks\Getters\GetTasks;
+use App\Actions\Pomodoro\Tasks\Getters\GetTaskStatuses;
+use App\Actions\Pomodoro\Tasks\UpdateTask;
 use App\Actions\User\GetUser;
 use App\Actions\User\PomodoroSettings\CreatePomodoroSettings;
 use App\Actions\User\Settings\UpdateUserSettings;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -60,4 +64,16 @@ Route::group([
             });
         });
     });
+
+    Route::group(['prefix' => 'tasks'], function () {
+        Route::post('/', CreateTask::class);
+        Route::get('/', GetTasks::class);
+
+        Route::group(['prefix' => '{task}'], function () {
+            Route::post('/update', UpdateTask::class);
+            Route::delete('/', DeleteTask::class);
+        });
+    });
 });
+
+Route::get('/tasks/status', GetTaskStatuses::class);

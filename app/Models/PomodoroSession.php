@@ -49,9 +49,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PomodoroSession currentByUser(User $user)
  * @property string|null $aborted_at
  * @method static Builder|PomodoroSession whereAbortedAt($value)
- * @property-read \App\Models\Step|null $current_step
+ * @property-read Step|null $current_step
  * @property-read string $end_time
  * @property-read string $resting_time
+ * @method static Builder|PomodoroSession whereEndTime($value)
  */
 class PomodoroSession extends Model
 {
@@ -147,7 +148,7 @@ class PomodoroSession extends Model
 
     public function getEndTimeAttribute(): string
     {
-       return $this->calculateEndTime();
+        return $this->calculateEndTime();
     }
 
     private function calculateEndTime(): string

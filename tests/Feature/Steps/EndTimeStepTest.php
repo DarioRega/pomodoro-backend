@@ -5,14 +5,14 @@ namespace Tests\Feature\Steps;
 use App\Actions\Pomodoro\StepTime;
 use App\Actions\Pomodoro\Steps\UserActions\ResumeStep;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
-use Tests\Feature\SessionsAndSteps;
+use Tests\Feature\Creators\SessionsAndStepsCreator;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EndTimeStepTest extends TestCase
 {
     use RefreshDatabase;
-    use SessionsAndSteps;
+    use SessionsAndStepsCreator;
     use StepTime;
 
     /**

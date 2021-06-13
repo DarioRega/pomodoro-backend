@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Feature;
+namespace Tests\Feature\Creators;
 
 use App\Actions\Pomodoro\Sessions\CreateDefaultSession;
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
@@ -14,7 +14,7 @@ use App\Models\Step;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
-trait SessionsAndSteps
+trait SessionsAndStepsCreator
 {
     public function createSession(array $data = []): PomodoroSession
     {
