@@ -18,6 +18,8 @@ class TaskActionsTest extends TestCase
         $task = CreateTask::run($user, ['name' => 'Test new task']);
         $this->assertEquals('Test new task', $task->name);
         $this->assertEquals('TODO', $task->taskStatus->name);
+        $this->assertNull($task->taskStatus->deadline);
+        $this->assertNull($task->taskStatus->description);
     }
 
     public function testCanGetAllTaskByTaskStatus()

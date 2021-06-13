@@ -19,17 +19,6 @@ class DeleteTask
         return $task->delete();
     }
 
-
-    public function rules(): array
-    {
-        return [
-            'name' => ['nullable'],
-            'description' => ['nullable'],
-            'deadline' => ['nullable', 'date', 'after:today'],
-            'task_status_id' => ['nullable', 'exists:task_statuses,id'],
-        ];
-    }
-
     public function asController(ActionRequest $request, Task $task): bool|JsonResponse
     {
         try {
@@ -46,7 +35,7 @@ class DeleteTask
     public function validate(Task $task)
     {
         if (Auth::id() !== $task->user_id) {
-            throw new UnauthorizedException(__('You are not allowed to update this task'));
+            throw new UnauthorizedException(__('You are not allowed to delete this task'));
         }
     }
 }
