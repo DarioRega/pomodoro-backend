@@ -8,6 +8,9 @@ use App\Actions\Pomodoro\Sessions\StartSession;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentSessionSteps;
 use App\Actions\Pomodoro\Steps\Getters\GetUserCurrentStep;
 use App\Actions\Pomodoro\Steps\UserActions\RunActionIntoCurrentStep;
+use App\Actions\User\GetUser;
+use App\Actions\User\PomodoroSettings\CreatePomodoroSettings;
+use App\Actions\User\Settings\UpdateUserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +31,11 @@ Route::group([
     'prefix' => 'user',
     'middleware' => 'auth:sanctum'
 ], function () {
-    Route::get('/', function (Request $request) {
-        return $request->user();
+    Route::get('/', GetUser::class);
+    Route::post('/settings', UpdateUserSettings::class);
+
+    Route::group(['prefix' => 'pomodoro-settings'], function () {
+        Route::post('/', CreatePomodoroSettings::class);
     });
 
     Route::group(['prefix' => 'sessions'], function () {

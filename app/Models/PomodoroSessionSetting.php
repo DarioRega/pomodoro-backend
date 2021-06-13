@@ -35,15 +35,27 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PomodoroSessionSetting whereUpdatedAt($value)
  * @method static Builder|PomodoroSessionSetting whereUserSettingId($value)
  * @mixin Eloquent
+ * @property string $user_id
+ * @property-read \App\Models\User $user
+ * @method static Builder|PomodoroSessionSetting whereUserId($value)
  */
 class PomodoroSessionSetting extends Model
 {
     use Uuids;
+
+    protected $fillable = [
+        'name',
+        'pomodoro_duration',
+        'small_break_duration',
+        'big_break_duration',
+        'pomodoro_quantity'
+    ];
+
     /**
      * Get this setting owner user
      */
-    public function userSettings(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(UserSettings::class);
+        return $this->belongsTo(User::class);
     }
 }

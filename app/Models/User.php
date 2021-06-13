@@ -62,6 +62,9 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User whereUserSettingId($value)
  * @mixin Eloquent
+ * @property-read Collection|\App\Models\PomodoroSessionSetting[] $pomodoroSessionSettings
+ * @property-read int|null $pomodoro_session_settings_count
+ * @property-read \App\Models\UserSettings|null $userSettings
  */
 class User extends Authenticatable
 {
@@ -121,10 +124,18 @@ class User extends Authenticatable
         return $this->hasMany(PomodoroSession::class);
     }
 
+    /**
+     * Get the pomodoro session settings for this user.
+     */
+    public function pomodoroSessionSettings(): HasMany
+    {
+        return $this->hasMany(PomodoroSessionSetting::class);
+    }
+
    /**
    * Get the global settings for this user.
    */
-    public function settings(): HasOne
+    public function userSettings(): HasOne
     {
         return $this->hasOne(UserSettings::class);
     }

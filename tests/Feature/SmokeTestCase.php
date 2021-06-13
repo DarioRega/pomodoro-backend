@@ -6,18 +6,17 @@ namespace Tests\Feature;
 use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Testing\TestResponse;
-use Notification;
 use Tests\TestCase;
 
 class SmokeTestCase extends TestCase
 {
     protected string $baseEndpoint = '';
-    protected array $events = [];
     private array $baseParameters = [
         'endpoint' => '/',
         'code' => 200,
         'method' => 'get',
         'errorMessage' => '',
+        'assertJson' => [],
         'create' => null,
         'body' => [],
         'events' => [],
@@ -30,7 +29,6 @@ class SmokeTestCase extends TestCase
     {
         $parameters = array_merge($this->baseParameters, $parameters);
 
-        Event::fake($this->events);
         $this->assertEvents($parameters);
 
         $this->callClassFunctionByFunctionName($parameters['create']);
@@ -38,6 +36,8 @@ class SmokeTestCase extends TestCase
         $endpoint = $this->baseEndpoint . $parameters['endpoint'];
 
         $response = $this->callEndpoint($parameters['method'], $endpoint, $parameters['body']);
+
+        $this->assertJsonResponse($response, $parameters);
 
         $response->assertStatus($parameters['code']);
 
@@ -54,7 +54,8 @@ class SmokeTestCase extends TestCase
     private function assertEvents(array $parameters)
     {
         if (!empty($parameters['events'])) {
-            $this->expectsEvents($this->events);
+            Event::fake($parameters['events']);
+            $this->expectsEvents($parameters['events']);
             foreach ($parameters['events'] as $event) {
                 Event::assertDispatched($event);
             }
@@ -80,6 +81,13 @@ class SmokeTestCase extends TestCase
     private function callClassFunctionByFunctionName($create)
     {
         call_user_func(array($this, $create));
+    }
+
+    private function assertJsonResponse($response, $parameters)
+    {
+        if (!empty($parameters['assertJson'])) {
+            $response->assertJson($parameters['assertJson']);
+        }
     }
 
     public function provider(): array
