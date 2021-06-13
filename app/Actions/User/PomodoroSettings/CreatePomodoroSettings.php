@@ -27,9 +27,6 @@ class CreatePomodoroSettings
         if (strlen($minutes) === 1) {
             $minutes = "0$minutes";
         }
-        if ($minutes === 60) {
-            return '01:00:00';
-        }
         return "00:$minutes:00";
     }
 
