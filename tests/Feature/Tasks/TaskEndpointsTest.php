@@ -19,7 +19,14 @@ class TaskEndpointsTest extends SmokeTestCase
     public function provider(): array
     {
         return [
-            'Get current steps' => [
+            'Get all tasks' => [
+                [
+                    'create' => 'createManyTasks',
+                    'endpoint' => '/api/user/tasks',
+                    'jsonCount' => 4,
+                ],
+            ],
+            'Get task statuses' => [
                 [
                     'endpoint' => '/api/tasks/status',
                     'jsonCount' => 4,

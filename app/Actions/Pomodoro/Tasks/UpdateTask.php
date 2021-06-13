@@ -17,7 +17,7 @@ class UpdateTask
     public function handle(Task $task, array $values): Task
     {
         $task->update($values);
-        return Task::find($task->id);
+        return Task::with('taskStatus')->get()->find($task->id);
     }
 
 
@@ -26,7 +26,7 @@ class UpdateTask
         return [
             'name' => ['nullable'],
             'description' => ['nullable'],
-            'deadline' => ['nullable', 'date', 'after:today'],
+            'deadline' => ['nullable', 'date', 'after:yesterday'],
             'task_status_id' => ['nullable', 'exists:task_statuses,id'],
         ];
     }

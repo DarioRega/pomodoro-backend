@@ -15,6 +15,14 @@ trait TasksCreators
         return CreateTask::run($user, ['name' => 'Test tasks']);
     }
 
+    public function createManyTasks()
+    {
+        $user = $this->createUser();
+        for($x = 0; $x < 4; ++$x) {
+            CreateTask::run($user, ['name' => 'Test tasks n°'.$x]);
+        }
+    }
+
     public function createOtherUserTask()
     {
         $user = $this->createUser();
