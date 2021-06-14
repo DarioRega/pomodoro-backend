@@ -23,7 +23,7 @@ class UserSettingsFactory extends Factory
     {
         return [
             'theme' => 'LIGHT',
-            'display_format' => '24H'
+            'time_display_format' => '24H'
         ];
     }
 }

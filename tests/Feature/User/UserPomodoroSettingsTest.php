@@ -38,6 +38,23 @@ class UserPomodoroSettingsTest extends SmokeTestCase
                     ]
                 ],
             ],
+            'Create pomodoro setting with 60 minutes duration' => [
+                [
+                    'create' => 'createUser',
+                    'endpoint' => '/pomodoro-settings',
+                    'method' => 'post',
+                    'code' => 201,
+                    'body' => [
+                        'pomodoro_duration' => '60',
+                        'small_break_duration' => '3',
+                        'big_break_duration' => '20',
+                        'pomodoro_quantity' => '5',
+                    ],
+                    'assertJson' => [
+                        'pomodoro_duration' => '01:00:00',
+                    ]
+                ],
+            ],
             'Update pomodoro settings' => [
                 [
                     'create' => 'createUserPomodoroSettings',

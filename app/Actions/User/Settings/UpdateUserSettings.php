@@ -2,7 +2,7 @@
 
 namespace App\Actions\User\Settings;
 
-use App\Enums\FrontendDisplayFormat;
+use App\Enums\FrontendTimeDisplayFormat;
 use App\Enums\FrontendTheme;
 use App\Models\User;
 use App\Models\UserSettings;
@@ -24,7 +24,7 @@ class UpdateUserSettings
     {
         return [
             'theme' => ['nullable', new EnumValue(FrontendTheme::class)],
-            'display_format' => ['nullable', new EnumValue(FrontendDisplayFormat::class)],
+            'time_display_format' => ['nullable', new EnumValue(FrontendTimeDisplayFormat::class)],
         ];
     }
 

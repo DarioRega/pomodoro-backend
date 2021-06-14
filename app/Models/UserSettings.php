@@ -31,7 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|UserSettings whereTheme($value)
  * @method static Builder|UserSettings whereUpdatedAt($value)
  * @mixin Eloquent
- * @property string $display_format
+ * @property string $time_display_format
  * @property string $user_id
  * @method static Builder|UserSettings whereDisplayFormat($value)
  * @method static Builder|UserSettings whereUserId($value)

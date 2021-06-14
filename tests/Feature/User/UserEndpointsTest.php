@@ -25,8 +25,14 @@ class UserEndpointsTest extends SmokeTestCase
                     'method' => 'post',
                     'body' => [
                         'theme' =>  'DARK',
-                        'display_format' => '12H'
+                        'time_display_format' => '12H'
                     ]
+                ],
+            ],
+            'Get user' => [
+                [
+                    'create' => 'createUser',
+                    'endpoint' => '/',
                 ],
             ],
         ];
