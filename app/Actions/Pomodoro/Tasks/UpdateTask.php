@@ -24,7 +24,7 @@ class UpdateTask
     public function rules(): array
     {
         return [
-            'name' => ['nullable'],
+            'name' => ['nullable', 'min:3'],
             'description' => ['nullable'],
             'deadline' => ['nullable', 'date', 'after:yesterday'],
             'task_status_id' => ['nullable', 'exists:task_statuses,id'],
