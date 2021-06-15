@@ -74,7 +74,7 @@ return [
     */
 
     'features' => [
-        // Features::euVatCollection(['home-country' => 'BE']),
+        Features::euVatCollection(['home-country' => 'CH']),
         // Features::receiptEmails(['custom-addresses' => true]),
         Features::paymentNotificationEmails(),
     ],
