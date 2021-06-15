@@ -25,6 +25,7 @@ class UpdateUserSettings
         return [
             'theme' => ['nullable', new EnumValue(FrontendTheme::class)],
             'time_display_format' => ['nullable', new EnumValue(FrontendTimeDisplayFormat::class)],
+            'pomodoro_session_setting_id' => ['nullable','exists:pomodoro_session_settings,id'],
         ];
     }
 
