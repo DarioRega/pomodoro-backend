@@ -75,8 +75,8 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://spark.laravel.com"
+            "type": "path",
+            "url": "./packages/spark-stripe-v1.1.6"
         }
     ]
 }
