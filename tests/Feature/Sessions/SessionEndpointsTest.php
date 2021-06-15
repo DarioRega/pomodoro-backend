@@ -51,6 +51,21 @@ class SessionEndpointsTest extends SmokeTestCase
                     'errorMessage' => 'You have no current session'
                 ],
             ],
+            'Create custom session' => [
+                [
+                    'create' => 'createPomodoroCustomSettings',
+                    'endpoint' => '/',
+                    'code' => 200,
+                    'method' => 'post',
+                    'body' => [
+                        'goals' => 'Test creating custom session'
+                    ],
+                    'assertJson' => [
+                        'goals' => 'Test creating custom session',
+                        'small_break_duration' => '00:03:00'
+                    ]
+                ],
+            ],
         ];
     }
 }

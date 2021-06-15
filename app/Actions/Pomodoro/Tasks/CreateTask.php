@@ -30,7 +30,7 @@ class CreateTask
     public function rules(): array
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'min:3'],
             'description' => ['nullable'],
             'deadline' => ['nullable', 'date', 'after:today'],
         ];

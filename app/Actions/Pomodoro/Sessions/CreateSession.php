@@ -3,6 +3,7 @@
 namespace App\Actions\Pomodoro\Sessions;
 
 use App\Actions\Pomodoro\Steps\Create\CreateSessionSteps;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -13,13 +14,13 @@ class CreateSession
 
     public function handle(array $data): Model
     {
-        if (isset($data['settings_id'])) {
-            // TODO implement create custom session
+        if (Auth::user()->userSettings->pomodoro_session_setting_id !== null) {
+            $session = CreateCustomSession::run($data);
+        } else {
+            $session = CreateDefaultSession::run($data);
         }
 
-        $session = CreateDefaultSession::run($data);
         CreateSessionSteps::run($session);
-
         return $session->with('steps')->latest()->first();
     }
 
