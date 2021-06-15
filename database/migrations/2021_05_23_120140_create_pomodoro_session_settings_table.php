@@ -11,9 +11,9 @@ class CreatePomodoroSessionSettingsTable extends Migration
         Schema::create('pomodoro_session_settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->nullable();
-            $table->time('pomodoro_duration');
-            $table->time('small_break_duration');
-            $table->time('big_break_duration');
+            $table->integer('pomodoro_duration');
+            $table->integer('small_break_duration');
+            $table->integer('big_break_duration');
             $table->integer('pomodoro_quantity');
             $table->timestamps();
 

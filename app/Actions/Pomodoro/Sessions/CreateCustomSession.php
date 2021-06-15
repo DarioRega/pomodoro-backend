@@ -2,7 +2,6 @@
 
 namespace App\Actions\Pomodoro\Sessions;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -10,14 +9,18 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class CreateCustomSession
 {
     use AsAction;
+    use PomodoroSettingHelpers;
 
     public function handle(array $data): Model
     {
         $pomodoroSessionSettings = Auth::user()->userSettings->pomodoroSessionSetting->toArray();
         $sessionData =[
-            'pomodoro_duration' => $pomodoroSessionSettings['pomodoro_duration'],
-            'small_break_duration' => $pomodoroSessionSettings['small_break_duration'],
-            'big_break_duration' => $pomodoroSessionSettings['big_break_duration'],
+            'pomodoro_duration' =>
+                $this->getTimeFormattedFromMinutes($pomodoroSessionSettings['pomodoro_duration']),
+            'small_break_duration' =>
+                $this->getTimeFormattedFromMinutes($pomodoroSessionSettings['small_break_duration']),
+            'big_break_duration' =>
+                $this->getTimeFormattedFromMinutes($pomodoroSessionSettings['big_break_duration']),
             'pomodoro_quantity' => $pomodoroSessionSettings['pomodoro_quantity'],
         ];
 
