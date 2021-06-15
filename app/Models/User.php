@@ -68,6 +68,38 @@ use Spark\Billable;
  * @property-read UserSettings|null $userSettings
  * @property-read Collection|Task[] $tasks
  * @property-read int|null $tasks_count
+ * @property string|null $stripe_id
+ * @property string|null $card_brand
+ * @property string|null $card_last_four
+ * @property string|null $card_expiration
+ * @property string|null $extra_billing_information
+ * @property string|null $trial_ends_at
+ * @property string|null $billing_address
+ * @property string|null $billing_address_line_2
+ * @property string|null $billing_city
+ * @property string|null $billing_state
+ * @property string|null $billing_postal_code
+ * @property string|null $vat_id
+ * @property array $receipt_emails
+ * @property string|null $billing_country
+ * @property-read Collection|\Spark\Receipt[] $localReceipts
+ * @property-read int|null $local_receipts_count
+ * @property-read Collection|\Laravel\Cashier\Subscription[] $subscriptions
+ * @property-read int|null $subscriptions_count
+ * @method static Builder|User whereBillingAddress($value)
+ * @method static Builder|User whereBillingAddressLine2($value)
+ * @method static Builder|User whereBillingCity($value)
+ * @method static Builder|User whereBillingCountry($value)
+ * @method static Builder|User whereBillingPostalCode($value)
+ * @method static Builder|User whereBillingState($value)
+ * @method static Builder|User whereCardBrand($value)
+ * @method static Builder|User whereCardExpiration($value)
+ * @method static Builder|User whereCardLastFour($value)
+ * @method static Builder|User whereExtraBillingInformation($value)
+ * @method static Builder|User whereReceiptEmails($value)
+ * @method static Builder|User whereStripeId($value)
+ * @method static Builder|User whereTrialEndsAt($value)
+ * @method static Builder|User whereVatId($value)
  */
 class User extends Authenticatable
 {
@@ -109,6 +141,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'trial_ends_at' => 'datetime',
     ];
 
     /**
