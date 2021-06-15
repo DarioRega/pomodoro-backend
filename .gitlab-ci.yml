@@ -27,6 +27,7 @@ tests:
   stage: test
   script:
     - cp .env.test .env
+    - composer config http-basic.spark.laravel.com $SPARK_USERNAME $SPARK_API_TOKEN
     - composer install
     - php artisan key:generate
     - php artisan test
@@ -49,6 +50,7 @@ pages:
   stage: coverage
   script:
     - cp .env.test .env
+    - composer config http-basic.spark.laravel.com $SPARK_USERNAME $SPARK_API_TOKEN
     - composer install
     - php artisan key:generate
     - ./vendor/bin/phpunit --coverage-text --colors=never -c phpunit.xml
