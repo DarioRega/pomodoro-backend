@@ -3,21 +3,21 @@
 namespace Tests\Feature\Sessions;
 
 use App\Models\PomodoroSession;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
 use Tests\Data;
 use Tests\Feature\Creators\SessionsAndStepsCreator;
+use Tests\Feature\Creators\UserCreators;
 use Tests\TestCase;
 
 class CreateDefaultSessionTest extends TestCase
 {
     use RefreshDatabase;
     use SessionsAndStepsCreator;
+    use UserCreators;
 
     public function testCreateDefaultSessionFromEndpoint()
     {
-        Sanctum::actingAs($user = User::factory()->create());
+        $user = $this->createUser();
 
         $response = $this->postJson('/api/user/sessions', [
             'goals' => Data::DEFAULT_SESSION_VALUES['goals'],

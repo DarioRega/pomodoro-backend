@@ -11,7 +11,6 @@ use Tests\TestCase;
 class SmokeTestCase extends TestCase
 {
     protected string $baseEndpoint = '';
-    protected array $events = [];
     private array $baseParameters = [
         'endpoint' => '/',
         'code' => 200,
@@ -66,8 +65,8 @@ class SmokeTestCase extends TestCase
     private function assertEvents(array $parameters)
     {
         if (!empty($parameters['events'])) {
-            Event::fake($this->events);
-            $this->expectsEvents($this->events);
+            Event::fake($parameters['events']);
+            $this->expectsEvents($parameters['events']);
             foreach ($parameters['events'] as $event) {
                 Event::assertDispatched($event);
             }

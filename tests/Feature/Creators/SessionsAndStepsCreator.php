@@ -9,6 +9,7 @@ use App\Actions\Pomodoro\Steps\UserActions\FinishStep;
 use App\Actions\Pomodoro\Steps\UserActions\PauseStep;
 use App\Actions\Pomodoro\Steps\UserActions\SkipStep;
 use App\Actions\Pomodoro\Steps\UserActions\StartStep;
+use App\Actions\User\PomodoroSettings\CreatePomodoroSettings;
 use App\Models\PomodoroSession;
 use App\Models\Step;
 use App\Models\User;
@@ -16,6 +17,8 @@ use Laravel\Sanctum\Sanctum;
 
 trait SessionsAndStepsCreator
 {
+    use UserCreators;
+
     public function createSession(array $data = []): PomodoroSession
     {
         Sanctum::actingAs($user = User::factory()->create());
@@ -78,5 +81,16 @@ trait SessionsAndStepsCreator
     public function getFirstSessionStep($session): Step
     {
         return $session->fresh()->steps()->first();
+    }
+
+    public function createPomodoroCustomSettings()
+    {
+        $user = $this->createUser();
+        return CreatePomodoroSettings::run($user, [
+            'pomodoro_duration' => '20',
+            'small_break_duration' => '3',
+            'big_break_duration' => '20',
+            'pomodoro_quantity' => '5'
+        ]);
     }
 }
