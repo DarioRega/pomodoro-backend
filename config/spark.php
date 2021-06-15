@@ -92,11 +92,11 @@ return [
     */
 
     'receipt_data' => [
-        'vendor' => 'Your Product',
-        'product' => 'Your Product',
-        'street' => '111 Example St.',
-        'location' => 'Los Angeles, CA',
-        'phone' => '555-555-5555',
+        'vendor' => 'Pomodoro',
+        'product' => 'Premium',
+        'street' => '1005 Lausanne',
+        'location' => 'Vaud, Switzerland',
+        'phone' => '078 609 79 93',
     ],
 
     /*
