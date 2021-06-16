@@ -10,14 +10,13 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class CreatePomodoroSettings
 {
     use AsAction;
-    use PomodoroSettingHelpers;
 
     public function handle(User $user, array $values): Model
     {
         $values = array_merge($values, [
-            'pomodoro_duration' => $this->getTimeFormattedFromMinutes($values['pomodoro_duration']),
-            'small_break_duration' => $this->getTimeFormattedFromMinutes($values['small_break_duration']),
-            'big_break_duration' => $this->getTimeFormattedFromMinutes($values['big_break_duration']),
+            'pomodoro_duration' => $values['pomodoro_duration'],
+            'small_break_duration' => $values['small_break_duration'],
+            'big_break_duration' => $values['big_break_duration'],
         ]);
 
         $pomodoroSettings = $user->pomodoroSessionSettings()->create($values);

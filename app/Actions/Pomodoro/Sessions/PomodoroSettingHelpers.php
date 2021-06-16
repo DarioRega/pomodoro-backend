@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Actions\User\PomodoroSettings;
+namespace App\Actions\Pomodoro\Sessions;
 
 trait PomodoroSettingHelpers
 {

@@ -13,28 +13,9 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class UpdatePomodoroSettings
 {
     use AsAction;
-    use PomodoroSettingHelpers;
 
     public function handle(PomodoroSessionSetting $sessionSetting, array $values): Model
     {
-        if (isset($values['pomodoro_duration'])) {
-            $values = array_merge($values, [
-                'pomodoro_duration' => $this->getTimeFormattedFromMinutes($values['pomodoro_duration']),
-            ]);
-        }
-
-        if (isset($values['small_break_duration'])) {
-            $values = array_merge($values, [
-                'small_break_duration' => $this->getTimeFormattedFromMinutes($values['small_break_duration']),
-            ]);
-        }
-
-        if (isset($values['big_break_duration'])) {
-            $values = array_merge($values, [
-                'big_break_duration' => $this->getTimeFormattedFromMinutes($values['big_break_duration']),
-            ]);
-        }
-
         $sessionSetting->update($values);
         return PomodoroSessionSetting::find($sessionSetting->id);
     }
@@ -54,8 +35,7 @@ class UpdatePomodoroSettings
     public function asController(
         ActionRequest $request,
         PomodoroSessionSetting $pomodoroSessionSettings
-    ): Model|JsonResponse
-    {
+    ): Model|JsonResponse {
         try {
             $this->validate($pomodoroSessionSettings);
             return $this->handle($pomodoroSessionSettings, $request->validated());

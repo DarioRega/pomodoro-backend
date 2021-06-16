@@ -31,27 +31,10 @@ class UserPomodoroSettingsTest extends SmokeTestCase
                         'pomodoro_quantity' => '5',
                     ],
                     'assertJson' => [
-                        'pomodoro_duration' => '00:20:00',
-                        'small_break_duration' => '00:03:00',
-                        'big_break_duration' => '00:20:00',
-                        'pomodoro_quantity' => '5',
-                    ]
-                ],
-            ],
-            'Create pomodoro setting with 60 minutes duration' => [
-                [
-                    'create' => 'createUser',
-                    'endpoint' => '/pomodoro-settings',
-                    'method' => 'post',
-                    'code' => 201,
-                    'body' => [
-                        'pomodoro_duration' => '60',
+                        'pomodoro_duration' => '20',
                         'small_break_duration' => '3',
                         'big_break_duration' => '20',
                         'pomodoro_quantity' => '5',
-                    ],
-                    'assertJson' => [
-                        'pomodoro_duration' => '01:00:00',
                     ]
                 ],
             ],
@@ -68,9 +51,9 @@ class UserPomodoroSettingsTest extends SmokeTestCase
                         'pomodoro_quantity' => '4',
                     ],
                     'assertJson' => [
-                        'pomodoro_duration' => '00:19:00',
-                        'small_break_duration' => '00:02:00',
-                        'big_break_duration' => '00:18:00',
+                        'pomodoro_duration' => '19',
+                        'small_break_duration' => '2',
+                        'big_break_duration' => '18',
                         'pomodoro_quantity' => '4',
                     ]
                 ],

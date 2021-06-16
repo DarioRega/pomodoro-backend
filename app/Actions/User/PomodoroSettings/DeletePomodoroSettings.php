@@ -12,7 +12,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class DeletePomodoroSettings
 {
     use AsAction;
-    use PomodoroSettingHelpers;
 
     public function handle(PomodoroSessionSetting $sessionSetting): bool
     {
