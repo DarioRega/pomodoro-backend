@@ -12,7 +12,13 @@ class GetUser
 
     public function handle(User $user): User
     {
-        $user->load('userSettings', 'pomodoroSessionSettings','userSettings.pomodoroSessionSetting');
+        $user->load(
+            'userSettings',
+            'pomodoroSessionSettings',
+            'userSettings.pomodoroSessionSetting',
+            'localReceipts',
+            'subscriptions'
+        );
         return $user;
     }
 

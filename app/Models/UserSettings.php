@@ -39,6 +39,7 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\PomodoroSessionSetting|null $pomodoroSessionSetting
  * @method static \Database\Factories\UserSettingsFactory factory(...$parameters)
  * @method static Builder|UserSettings wherePomodoroSessionSettingId($value)
+ * @method static Builder|UserSettings whereTimeDisplayFormat($value)
  */
 class UserSettings extends Model
 {
