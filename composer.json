@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-intl": "^8.0",
         "bensampo/laravel-enum": "^3.3",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -14,13 +15,13 @@
         "laravel/framework": "^8.40",
         "laravel/jetstream": "^2.3",
         "laravel/sanctum": "^2.6",
+        "laravel/spark-stripe": "^1.0",
         "laravel/tinker": "^2.5",
         "lorisleiva/laravel-actions": "^2.1",
         "pusher/pusher-php-server": "^7.0",
         "spatie/laravel-webhook-client": "^2.7",
         "squizlabs/php_codesniffer": "*",
-        "tightenco/ziggy": "^1.0",
-        "laravel/spark-stripe": "^1.0"
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
