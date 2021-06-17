@@ -55,6 +55,6 @@ class CreateTask
 
     public function userHaveMoreThanFiveTasks(User $user): bool
     {
-        return $user->tasks()->count() > 5;
+        return $user->tasks()->count() >= 5;
     }
 }
