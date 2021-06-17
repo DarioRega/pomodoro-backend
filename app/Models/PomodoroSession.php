@@ -153,7 +153,7 @@ class PomodoroSession extends Model
 
     private function calculateEndTime(): string
     {
-        $sessionEndTime = now();
+        $sessionEndTime = now()->addSeconds(1);
         foreach ($this->steps as $step) {
             $stepRestingTime = Carbon::createFromFormat('H:i:s', $step->resting_time);
             $sessionEndTime->addHours($stepRestingTime->hour)
