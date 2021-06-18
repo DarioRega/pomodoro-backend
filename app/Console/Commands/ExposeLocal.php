@@ -35,13 +35,6 @@ class ExposeLocal extends Command
      */
     public function handle()
     {
-        $name = $this->choice('what is your name?', ['dario', 'renato']);
-        $this->info(
-            "You need to go to this website: https://dashboard.pusher.com/apps/1217962/webhooks " .
-            "and activate the webhook with your name"
-        );
-        $this->newLine();
-        $this->warn('Do not forget to deactivate it when you are finish');
-        system("./vendor/bin/sail share --subdomain=$name.pomodoro");
+        system("./vendor/bin/sail share --subdomain=pomodoro");
     }
 }
