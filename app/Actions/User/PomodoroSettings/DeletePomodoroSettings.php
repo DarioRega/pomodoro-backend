@@ -15,8 +15,7 @@ class DeletePomodoroSettings
 
     public function handle(PomodoroSessionSetting $sessionSetting): bool
     {
-        $sessionSetting->userSettings->pomodoro_session_setting_id = null;
-        $sessionSetting->userSettings->save();
+        $this->unlinkPomodoroSessionFromUser($sessionSetting);
         return $sessionSetting->delete();
     }
 
@@ -38,6 +37,14 @@ class DeletePomodoroSettings
     {
         if (Auth::id() !== $sessionSetting->user_id) {
             throw new UnauthorizedException(__('You are not allowed to delete this settings'));
+        }
+    }
+
+    private function unlinkPomodoroSessionFromUser(PomodoroSessionSetting $sessionSetting)
+    {
+        if (Auth::user()->userSettings->pomodoro_session_setting_id === $sessionSetting->id) {
+            Auth::user()->userSettings->pomodoro_session_setting_id = null;
+            Auth::user()->userSettings->save();
         }
     }
 }
