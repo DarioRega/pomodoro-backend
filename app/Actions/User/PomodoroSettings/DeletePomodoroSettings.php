@@ -15,6 +15,8 @@ class DeletePomodoroSettings
 
     public function handle(PomodoroSessionSetting $sessionSetting): bool
     {
+        $sessionSetting->userSettings->pomodoro_session_setting_id = null;
+        $sessionSetting->userSettings->save();
         return $sessionSetting->delete();
     }
 
