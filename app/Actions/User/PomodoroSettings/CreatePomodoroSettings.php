@@ -31,7 +31,7 @@ class CreatePomodoroSettings
             'name' => ['nullable'],
             'pomodoro_duration' => ['required', 'integer', 'between:15,60'],
             'small_break_duration' => ['required', 'integer', 'between:1,15'],
-            'big_break_duration' => ['required', 'integer', 'between:15,30'],
+            'big_break_duration' => ['required', 'integer', 'between:10,30'],
             'pomodoro_quantity' => ['required', 'integer', 'between:2,10'],
         ];
     }
